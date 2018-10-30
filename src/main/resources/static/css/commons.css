@@ -1,0 +1,78 @@
+/*table*/
+body{color:#000;}
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+  background-color: #a3c3ff;
+}
+table {
+  max-width: 100%;
+  background-color: #dcdcdc;
+  color:#000;
+}
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #f0f0f0;
+}
+a.modifyUser_trigger{color:#419641;}
+a.deleteUser{color:#eb9316;}
+.table-bordered {
+  border: 1px solid #d4d4d4;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border: 0px;
+}
+.username{color:#006584}
+.dataTable tr th, td {
+    text-align: center;
+}
+table.dataTable.no-footer {
+    border: 1px solid #d4d4d4;
+}
+a.link-green {
+    color:#419641;
+    text-decoration: none;
+}
+a.link-green:hover {
+    text-decoration: underline;
+}
+a.link-orange {
+    color:#eb9316;
+    text-decoration: none;
+}
+a.link-orange:hover {
+    text-decoration: underline;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 5px 0;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border: 0px;
+    background-color: #e7e7e7;
+    background: none;
+}
+.modal-header{
+    background-color: #28557F;
+}
+.modal-footer{
+	background-color:#e7e7e7;
+}
+.has-success .input-group-addon {
+    color: #405F7F;
+    border: none;
+    background-color:#e7e7e7;
+    font-weight:bold;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: #333 !important;
+}
+.row_actions{
+	height: 29px;
+}
+.timeCost{
+	color:#7B7B7B ; font:normal  normal 14px Î¢ÈíÑÅºÚ;  margin-left: 50px
+}

@@ -1,0 +1,112 @@
+/* login css */
+.login-container {
+    height: 100%;
+    background: #373d41 url("../images/login-bg.jpg") no-repeat;
+    background-size: cover;
+}
+.login-top {
+    height: 60px;
+    background-color: #1F2325;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 24px;
+    color: #ffffff;
+    line-height: 60px;
+    padding: 0 20px;
+}
+.login-box {
+    width: 490px;
+    margin: 100px auto 0;
+    padding: 30px 55px;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+.login-box-title {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+}
+.login-tip {
+    height: 30px;
+    line-height: 28px;
+    font-size: 12px;
+    overflow: hidden;
+}
+.form-horizontal .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}
+.input-group .input-md {
+    height: 40px;
+    padding: 6px 12px;
+    font-size: 14px;
+}
+.btn-login {
+    height: 40px;
+    color: #ffffff;
+    background: #00C1DE;
+}
+.btn-login:active, .btn-login:hover {
+    color: #ffffff;
+    background-color: #00b7d3;
+}
+.copyright {
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    background-color: inherit;
+    bottom: 0;
+    text-align: center;
+    line-height: 60px;
+    color: #73777a;
+    font-size: 12px;
+}
+/* index nav css */
+.navbar {
+    border-radius: 0;
+    background: #373d41;
+    border: none;
+}
+.navbar-default .navbar-brand, .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-nav > li > a:focus {
+    color: #ffffff;
+}
+.navbar-default .navbar-nav > li > a:hover {
+    color: #00c1de;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    color: #00c1de;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    color: #00c1de;
+    background-color: transparent;
+}
+.dropdown-menu {
+    background-color: #373d41;
+    border: 1px solid rgba(34, 34, 34, .15);
+}
+.dropdown-menu > li > a {
+    color: #ffffff;
+}
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+    color: #00c1de;
+    text-decoration: none;
+    background-color: rgb(34, 34, 34);
+}
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+    color: #00c1de;
+    text-decoration: none;
+    background-color: rgb(34, 34, 34);
+    outline: 0;
+}
+i.close {
+    float: none;
+    display: inline-block;
+    line-height: 16px;
+    font-size: 20px;
+    margin-left: 5px;
+    vertical-align: middle;
+}

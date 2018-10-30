@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.snow.mapper.UserMapper">
+
+    <select id="getMatchCount" parameterType="java.lang.String">
+
+        select count (*) from t_user where user_name=#{username} and password=#{password}
+
+    </select>
+
+    <select id="findUserByUserName" parameterType="java.lang.String">
+
+        SELECT user_id,user_name,credits FROM t_user WHERE user_name =#{username}
+
+    </select>
+
+    <!--<update id="updateLoginInfo">-->
+    <!--UPDATE t_user SET  last_visit=#{username},last_ip=#{username},credits=#{username}  WHERE user_id =#{username}-->
+    <!--</update>-->
+
+</mapper>

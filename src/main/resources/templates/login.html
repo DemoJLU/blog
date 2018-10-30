@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html >
+<head>
+    <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/bootstrap/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/bootstrap/jquery.datetimepicker.min.css" />
+    <link rel="stylesheet" href="../css/vehicle.css" />
+    <style type="text/css">
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus
+        {
+            color: #006584;
+            font-weight: 700;
+            border: 0;
+            border-bottom: 3px solid #4e5d6c;
+            outline: none;
+        }
+
+        .nav-tabs>li>a {
+            color: #006584;
+        }
+
+        .nav-tabs>li>a:hover {
+            background-color: #e7e7e7;
+            border-color: #e7e7e7;
+        }
+    </style>
+</head>
+<body>
+<form class="form-signin" role="form">
+    <input type="text" class="form-control" placeholder="用户名" required="required" id="username" />
+    <input type="password" class="form-control" placeholder="密码" required="required" id="password" />
+    <button class="btn btn-success" type="submit" id="loginBtn">登录</button>
+    <label class="checkbox"> <input type="checkbox" value="remember-me" /> 记住我
+    </label>
+</form>
+<a href="/register">注册</a>
+<!--<p th:if="${success} == false">登录失败</p>
+<p th:text="${info}" />-->
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/login.js"></script>
+</body>
+</html>
