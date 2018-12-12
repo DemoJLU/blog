@@ -1,7 +1,5 @@
 package com.danxiaochong.blog.controlller;
 
-import com.danxiaochong.blog.pojo.LoginCommand;
-import com.danxiaochong.blog.pojo.User;
 import com.danxiaochong.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,14 +7,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/")
 public class LoginController {
 
     @Autowired
@@ -25,7 +21,7 @@ public class LoginController {
     /**
      * 登录
      */
-    @RequestMapping(value = "/loginPage")
+    @RequestMapping(value = "/login")
     public String loginPage() {
         return "login";
     }
@@ -33,10 +29,15 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "loginCheck", method = {RequestMethod.POST})
     public String loginCheck(@RequestBody Map<String, String> params, HttpServletRequest request) {
-        String userId = params.get("userid");
+        String username = params.get("username");
         String password = params.get("password");
         String remember = params.get("remember");
-        return  null;
+        boolean flag = userService.hasMatchUser(username,password);
+        String code = "1";
+        if (!flag){
+            code = "0";
+        }
+        return  code;
     }
 
 

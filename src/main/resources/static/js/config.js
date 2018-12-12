@@ -14,7 +14,7 @@ define(function () {
     var pos = currentPath.indexOf(pathName);
     // 获取主机地址，如：http://localhost:8080
     var basePath = currentPath.substring(0, pos);
-    if (pathName.toUpperCase().indexOf('blog') != -1) {
+    if (pathName.toUpperCase().indexOf('BLOG') != -1) {
         basePath += pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
     }
     require.config({

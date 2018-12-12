@@ -31,17 +31,17 @@ require(['config'], function (config) {
             var self = this;
             if (this.validate()) {
                 $.ajax({
-                    url: '../../login/loginCheck',
+                    url: config.basePath + '/loginCheck',
                     type: 'POST',
                     contentType: 'application/json',
                     dataType : "json",
                     data: JSON.stringify({
-                    	userid: self.username.val(),
+                        username: self.username.val(),
                     	password: self.password.val()
                     }),
                     success: function (msg) {
-                        self.showError(msg.message);
-        				if (msg.errCode == 0) {
+                        self.showError("成功");
+        				if (msg==1) {
         					window.location.href = "./pages/index.html";
         				}
                     },
