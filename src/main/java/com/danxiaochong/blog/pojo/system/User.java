@@ -1,21 +1,21 @@
-package com.danxiaochong.blog.pojo;
+package com.danxiaochong.blog.pojo.system;
 
 import java.io.Serializable;
 import java.util.Date;
 
 public class User implements Serializable {
-    private int userId;
+    private String userId;
     private String userName;
     private String passWord;
     private int credits;
     private String lastIp;
     private Date lastVisit;
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

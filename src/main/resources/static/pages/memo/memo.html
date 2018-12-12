@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:margin="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>备忘录</title>
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/bootstrap/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/bootstrap/jquery.datetimepicker.min.css" />
+    <link rel="stylesheet" href="../css/vehicle.css" />
+    <style type="text/css">
+        #scrollBox ul{
+            list-style: none;
+            width: 100%;
+            height: 100%;
+        }
+        #scrollBox ul li,p{
+            width: 100%;
+            height: 40px;
+            box-sizing: border-box;
+            line-height: 40px;
+            text-align: left;
+            margin-right:-50px;
+        }
+        #scrollBox ul li a:HOVER {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid"  margin: 70px auto 0;>
+    <div class="row">
+        <div id="search-panel" class="col-xs-2 col-md-2">
+            <div style="padding-left: 20px;">
+                <h3 class="text-info search-title">
+                    备忘查询<span class="glyphicon glyphicon-remove search-remove"></span>
+                </h3>
+                <form>
+                    <div class="form-group">
+                        <label for="task_starttime" class="control-label">开始时间：</label>
+                        <input class="form-control" id="task_starttime">
+                    </div>
+                    <div class="form-group">
+                        <label for="rpEndTime" class="control-label">结束时间：</label>
+                        <input class="form-control" id="rpEndTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="input_time" class="control-label">录入时间：</label>
+                        <input class="form-control" id="input_time">
+                    </div>
+                    <div class=" form-group">
+                        <label for="matter_get" class="control-label">事项：</label>
+                        <select class="form-control" id="matter_get">
+                            <option value="404">全部</option>
+                        </select>
+                    </div>
+                    <div class=" form-group">
+                        <label for="done" class="control-label">完成状态：</label>
+                        <select class="form-control" id="done">
+                            <option value="0">未完成</option>
+                            <option value="1">已完成</option>
+                            <option value="2">全部</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="btnQuery" class="btn btn-success form-control">查询</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="btnQueryToday" class="btn btn-success form-control">今日备忘</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="btnReset" class="btn btn-warning form-control">重置</button>
+                    </div>
+                </form>
+                <table  id="vehInfoTable" border="1" style="display: none" width="200px" height="160px" align="center" cellspacing="0" cellpadding="5">
+                    <tr align="center" bgcolor="#f9f9f9"> <td colspan="2" style="width:200px;" id="veh_specie"></td> </tr>
+                    <tr align="center" bgcolor="#f9f9f9"> <td colspan="2" style="width:200px;" id="train_num"></td> </tr>
+                    <tr align="center" bgcolor="#f9f9f9"> <td colspan="2" style="width:200px;" id="veh_id"></td> </tr>
+                    <tr align="center" bgcolor="#f9f9f9"> <td style="width:100px;" id="fixed_number"></td><td id="wind_supply_form"></td></tr>
+                    <tr align="center" bgcolor="#f9f9f9"> <td style="width:100px;" id="main_line_volt"></td><td id="hook_type"></td></tr>
+                </table>
+            </div>
+        </div>
+        <div id="content-panel" class="col-xs-10 col-md-10">
+            <dl class="warning-content">
+                <dt>
+                    <h3 class="content-title"><span class="glyphicon glyphicon-menu-hamburger search-show"></span> 备忘信息</h3>
+                    <div id="noticeDetailAlert" class="alert alert-info"  style="position: absolute;left: 25%;top: 8px;width: 50%;height: 50px;padding-top:5px;overflow: hidden;z-index: 999">
+                        <a href="#" class="close"  style="color: grey">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                            <span class="glyphicon glyphicon-chevron-up" style="display: none"></span>
+                        </a>
+                        <p style="width:20%;float: left;font-weight: bold;"> <span id="noticeDetailSize"></span> 条长备忘将到期：</p>
+                        <div id="scrollBox" style="width:80%;overflow: hidden;">
+                            <ul >
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <!--  <button type="button" id="btnAdd" class="btn btn-success" data-toggle="modal" data-target="#repairModal" data-action="add" style="width: 100px; margin: 15px 5px 10px 0;">新增任务</button> -->
+                        <button type="button" id="btnAdd" class="btn btn-success" data-toggle="modal" data-target="#addPlanOne" data-action="add" style="width: 100px; margin: 15px 5px 10px 0;">新增备忘</button>
+                        <button id="btnExport" type="button" class="btn btn-info pull-right btn-range"  style="width: 100px; margin: 15px 5px 10px 10px;">
+                            选择删除
+                        </button>
+                        <button id="btnExportOk" type="button" class="btn btn-success pull-right btn-range"  style="width: 100px; margin: 15px 5px 10px 10px;display:none;">
+                            确认删除
+                        </button>
+                        <button type="button" id="btnRefresh" class="btn btn-warning" style="width: 100px; margin: 15px 0 10px;">刷新</button>
+                    </div>
+                </dt>
+                <dd>
+                    <table id="dayShiftPlan" class="table table-striped table-hover table-bordered" width="100%">
+                        <thead>
+                        <tr style="background-color: #DFE2E6; color: #333333">
+                            <th><input type="checkbox" class="checkall"/></th>
+                            <th>序号</th>
+                            <th>时间</th>
+                            <th>类别</th>
+                            <th>等级</th>
+                            <th>最后期限</th>
+                            <th>内容</th>
+                            <th>录入人</th>
+                            <th>录入时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<!-- 第一层窗口 -->
+<div class="modal fade" id="addPlanOne" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">
+    <div class="modal-dialog" role="document" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="repairModalLabel">新增备忘信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="inline-block">
+                    <div class="col-sm-5 form-group col-sm-offset-2">
+                        <label for="input_people" class="control-label"><span style="color:red">*</span>录入人：</label>
+                        <input id="input_people" class="form-control" required>
+                    </div>
+                    <!--       <div class="col-sm-4 form-group" >
+                                <label for="rpStartTime" class="control-label"><span style="color:red">*</span>录入时间：</label>
+                                <input class="form-control" id="rpStartTime" required>
+                            </div>   -->
+                    <div class="col-sm-5 form-group">
+                        <label for="dayNightType" class="control-label"><span style="color:red">*</span>是否涉及库内调车：</label>
+                        <button type="button" id="btnYes" class="btn btn-success"  data-action="add" style="width: 70px; ">是</button>&nbsp;&nbsp;
+                        <button type="button" id="btnNo" class="btn btn-success"  data-action="add" style="width: 70px; ">否</button>
+                    </div>
+                    <input id="taskId" class="form-control" type="hidden" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新的第二层调车框 是 -->
+<div class="modal fade" id="repairModalNew1" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">
+    <div class="modal-dialog" role="document" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="repairModalLabel">库内调车任务信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="inline-block">
+                    <div class="col-sm-4 form-group">
+                        <label for="rpStartTime" class="control-label"><span style="color:red">*</span>一事一令下达时间：</label>
+                        <input class="form-control" id="rpStartTimeYes" required>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="dayNightType" class="control-label"><span style="color:red">*</span>白夜班：</label>
+                        <select class="form-control" id="dayNightTypeYes" required  >
+                            <option value="1">当日夜班</option>
+                            <option value="0">次日白班</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="matter" class="control-label">事项：</label>
+                        <select class="form-control" id="matterYes" required  >
+                        </select>
+                    </div>
+
+                    <div class="col-sm-2 form-group">
+                        <label for="train_number" class="control-label"><span style="color:red">*</span>车次：</label>
+                        <input id="train_numberYes" class="form-control" required>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label for="task_cycleYes" class="control-label"><span style="color:red">*</span>周期：</label>
+                        <select class="form-control" id="task_cycleYes" required  >
+                            <option value="1">1天</option>
+                            <option value="2">2天</option>
+                            <option value="3">3天</option>
+                            <option value="4">4天</option>
+                            <option value="5">5天</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="priority" class="control-label"><span style="color:red">*</span>优先级：</label>
+                        <select class="form-control" id="priorityYes" required  >
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="rpEndTime" class="control-label">最后期限：</label>
+                        <input id="rpEndTimeYes" class="form-control" >
+                    </div>
+                    <div class="col-sm-12 form-group" >
+                        <span id="fullTrainNum" style="position: absolute;left:3%;top:-3px;color: blue"></span>
+                        <label for="command_content" class="control-label" style="margin-top:20px;"><span style="color:red">*</span>内容：</label>
+                        <textarea id="command_contentYes" class="form-control" rows="3" style="margin: 0px; width: 100%; height: 66px;" required></textarea>
+                    </div>
+                    <input id="input_user"  type="hidden" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="btnSaveYes" type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新的第二层调车框 否-->
+<div class="modal fade" id="repairModalNew2" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">
+    <div class="modal-dialog" role="document" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="repairModalLabel">非库内调车任务信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="inline-block">
+                    <div class="col-sm-4 form-group">
+                        <label for="rpStartTime" class="control-label"><span style="color:red">*</span>一事一令下达时间：</label>
+                        <input class="form-control" id="rpStartTime" required>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="matter" class="control-label">事项：</label>
+                        <select class="form-control" id="matter" required  >
+                        </select>
+                    </div>
+                    <div class="col-sm-8 form-group">
+                        <label for="command_content" class="control-label" style="margin-top:-20px;"><span style="color:red">*</span>内容：</label>
+                        <textarea id="command_content" class="form-control" rows="3" style="margin: 0px; width: 500px; height: 66px;" required></textarea>
+                    </div>
+                    <input id="input_user"  type="hidden" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="btn_save" type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RepairModal -->
+<div class="modal fade" id="repairModal" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">
+    <div class="modal-dialog" role="document" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="repairModalLabel">修改计划信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="inline-block">
+                    <div class="col-sm-4 form-group">
+                        <label for="upRpStartTime" class="control-label"><span style="color:red">*</span>开始时间：</label>
+                        <input class="form-control" id="upRpStartTime" required>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="upDayNightType" class="control-label"><span style="color:red">*</span>白夜班：</label>
+                        <select class="form-control" id="upDayNightType" required  >
+                            <option value="0">次日白班</option>
+                            <option value="1">当日夜班</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="upMatter" class="control-label"><span style="color:red">*</span>事项：</label>
+                        <select class="form-control" id="upMatterYes" required style="display: none" >
+                        </select>
+                        <select class="form-control" id="upMatter" required style="display: none" >
+                        </select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label for="upTrain_number" class="control-label">车次：</label>
+                        <input id="upTrain_number" class="form-control">
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label for="upTask_cycle" class="control-label">周期：</label>
+                        <select class="form-control" id="upTask_cycle" required  >
+                            <option value="1">1天</option>
+                            <option value="2">2天</option>
+                            <option value="3">3天</option>
+                            <option value="4">4天</option>
+                            <option value="5">5天</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="upPriority" class="control-label"><span style="color:red">*</span>优先级：</label>
+                        <select class="form-control" id="upPriorityYes" required  >
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="upRpEndTime" class="control-label">到期时间：</label>
+                        <input id="upRpEndTime" class="form-control" >
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <span id="upFullTrainNum" style="position: absolute;left:3%;top:-3px;color: blue"></span>
+                        <label for="upCommand_content" class="control-label" style="margin-top:20px;"><span style="color:red">*</span>内容：</label>
+                        <textarea id="upCommand_content" class="form-control" rows="3" style="margin: 0px; width: 100%; height: 66px;" required></textarea>
+                    </div>
+                    <input id="upTaskId" class="form-control" type="hidden" />
+                    <input id="upDepotDispatch" class="form-control" type="hidden" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="btnUpdateSave" type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirmModal -->
+<div class="modal fade" id="addconfirmModal" tabindex="-1" role="dialog" aria-labelledby="addconfirmModalLabel">
+    <div class="modal-dialog modal-sm" style="width: 350px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="关闭">&times;</button>
+                <h4 class="modal-title" id="addconfirmModalLabel">新增任务信息提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-danger" style="font-weight: bold;">新增任务信息成功！</h4>
+                <input type="hidden" id="addId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- updateconfirmModal -->
+<div class="modal fade" id="updateconfirmModal" tabindex="-1" role="dialog" aria-labelledby="updateconfirmModalLabel">
+    <div class="modal-dialog modal-sm" style="width: 350px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="关闭">&times;</button>
+                <h4 class="modal-title" id="updateconfirmModalLabel">修改任务修信息提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-danger" style="font-weight: bold;">修改任务信息成功！</h4>
+                <input type="hidden" id="updateId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirmDeleteModal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog modal-sm" style="width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h4 class="modal-title" id="deleteModalLabel">删除记录提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-danger" style="font-weight: bold;">确定要删除本条任务信息吗？</h4>
+                <input type="hidden" id="deleteId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="btnDelete" type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/lib/require.js" data-main="../js/planning/dayShiftPlan"></script>
+</body>
+</html>

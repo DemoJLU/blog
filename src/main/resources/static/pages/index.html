@@ -1,10 +1,169 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>小乌龟家庭系统</title>
+    <link rel="shortcut icon" href="../images/favicon.ico">
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/common.css" />
 </head>
 <body>
-<li>23333333</li>
+<div id="wrapper">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse-1" aria-expanded="false">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--<a class="navbar-brand" href="#">-->
+                    <!--<img src="../images/banner.png" height="34" width="315" style="margin-top:-6px"/>-->
+                <!--</a>-->
+            </div>
+            <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+                <ul class="nav navbar-nav" id="navigation">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!--<li> <a class="navbar-brand" href="#">-->
+                        <!--<img src="../images/kthwlogo.png" height="37" width="300" style="margin-top:-8px"/>-->
+                    <!--</a></li>-->
+                    <li><a href="#userInfoModal" data-toggle="modal" title="用户信息"><span id="userName"></span></a></li>
+                    <li><a href="#" id="quit">&nbsp;注销</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid container-bg" style="margin-top: -10px;">
+        <ul class="nav nav-tabs"></ul>
+        <div class="tab-content" style="margin-right: -15px; margin-left: -15px;"></div>
+    </div>
+</div>
+<div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" title="关闭" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title" id="myModalLabel">用户信息</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="position: relative;">
+                    <div class="col-md-4 col-sm-12 col-md-push-1">
+                        <h4 style="margin-bottom: 30px">基本信息</h4>
+                        <div class="form-group">
+                            <label class="control-label">用户名称：</label>
+                            <span class="text-muted" id="user-name"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">用户角色：</label>
+                            <span class="text-danger" id="user-role"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">用户首页：</label>
+                            <select id="user-index" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <span class="text-muted">修改登陆后的首页显示</span>
+                            <button id="subIdx" data-dismiss="modal" class="btn btn-primary pull-right">修改</button>
+                        </div>
+                    </div>
+                    <div class="hidden-xs hidden-sm" style="position: absolute; height: 100%; border-left: 1px solid #EEE; left: 50%;"></div>
+                    <div class="col-md-4 col-sm-12 col-md-push-3">
+                        <h4 style="margin-bottom: 30px;">修改密码</h4>
+                        <div class="form-group">
+                            <label class="control-label">原密码：</label>
+                            <input id="old-ps" type="password" class="form-control" placeholder="请输入用户原来的密码" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">新密码：</label>
+                            <input id="new-ps" type="password" class="form-control" placeholder="请输入用户新密码" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">确认密码：</label>
+                            <input id="cf-ps" type="password" class="form-control" placeholder="请再次输入用户新密码" />
+                        </div>
+                        <div class="form-group">
+                            <span class="text-muted">快速修改密码</span>
+                            <button id="btnModifyPsOk"  class="btn btn-primary pull-right">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- updateModal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel">
+    <div class="modal-dialog modal-sm" style="width: 350px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="关闭">&times;</button>
+                <h4 class="modal-title" id="updateModalLabel">修改登录后首页显示提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-danger" style="font-weight: bold;">您选择要修改的首页与当前首页相同！</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- updateModal -->
+<div class="modal fade" id="updatePassModal" tabindex="-1" role="dialog" aria-labelledby="updatePassModalLabel">
+    <div class="modal-dialog modal-sm" style="width: 350px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="关闭">&times;</button>
+                <h4 class="modal-title" id="updatePassModalLabel">修改密码提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-danger" style="font-weight: bold;">修改密码成功！</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- noModal -->
+<div class="modal fade" id="noModal" tabindex="-1" role="dialog" aria-labelledby="noModalLabel">
+    <div class="modal-dialog modal-sm" style="width: 350px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="关闭">&times;</button>
+                <h4 class="modal-title" id="noPassModalLabel">修改密码提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-danger" style="font-weight: bold;">密码信息不完整，请重新输入！</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- noModal -->
+<div class="modal fade" id="noSameModal" tabindex="-1" role="dialog" aria-labelledby="noModalLabel">
+    <div class="modal-dialog modal-sm" style="width: 350px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="关闭">&times;</button>
+                <h4 class="modal-title" id="noPassModalLabel">修改密码提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-danger" style="font-weight: bold;">两次输入的新密码不相同，请重新输入！</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- data-main指定入口文件，不可以是index.js;
+在此指定入口文件之后，即默认自动设置本页面的baseUrl为:../js，
+在index.js文件中引用config的路径默认为../js；config文件的引用也不可以.js -->
+<script src="../js/lib/require.js" data-main="../js/index.js"></script>
 </body>
 </html>

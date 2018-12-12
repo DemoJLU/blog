@@ -3,15 +3,31 @@
 <mapper namespace="com.danxiaochong.blog.mapper.UserMapper">
 
     <select id="getMatchCount" parameterType="java.lang.String" resultType="Integer">
-        select count(*) from t_user where user_name=#{userName} and password=#{passWord}
+        select count(*) from t_user where user_name=#{userName} and pass_word=#{passWord}
     </select>
 
     <select id="findUserByUserName" parameterType="java.lang.String">
         SELECT user_id,user_name,credits FROM t_user WHERE user_name =#{username}
     </select>
 
-    <!--<update id="updateLoginInfo">-->
-    <!--UPDATE t_user SET  last_visit=#{username},last_ip=#{username},credits=#{username}  WHERE user_id =#{username}-->
-    <!--</update>-->
+    <update id="updateUser" parameterType="User">
+		update TBL_user set
+		pass_wod=#{passWord},user_name=#{userName} where user_id=#{userId}
+	</update>
+
+    <select id="getRoleByUser" parameterType="String" resultType="UserRole">
+		SELECT UR.*, ROLE.ROLE_NAME AS role_name, ROLE.ROLE_CODE AS role_code
+		FROM TBL_USER_ROLES UR,TBL_ROLE ROLE
+		WHERE UR.USER_ID = #{userId}
+		AND ROLE.ROLE_ID = UR.ROLE_ID
+	</select>
+
+    <select id="queryFuncByUser" parameterType="String" resultType="Function">
+        SELECT DISTINCT (f.ID), f.FUNC_NAME, f.FUNC_URL, f.PARENT_ID, f.FUNC_LEVEL, f.FUNC_DESC, f.SHOW_ORDER, f.ENABLE
+        FROM TBL_USER_ROLES r, TBL_PERMISSION p, TBL_FUNCTION f
+        WHERE r.USER_ID = #{userId} AND r.ROLE_ID = p.ROLE_ID AND p.FUNC_ID = f.ID AND f.ENABLE != 1
+        ORDER BY f.FUNC_LEVEL
+    </select>
+
 
 </mapper>
