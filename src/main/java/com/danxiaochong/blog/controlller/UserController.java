@@ -1,9 +1,10 @@
 package com.danxiaochong.blog.controlller;
 
+import com.danxiaochong.blog.common.Utils;
 import com.danxiaochong.blog.common.base.ErrCode;
-import com.danxiaochong.blog.pojo.system.MenuNode;
-import com.danxiaochong.blog.pojo.system.User;
-import com.danxiaochong.blog.pojo.system.UserRole;
+import com.danxiaochong.blog.pojo.MenuNode;
+import com.danxiaochong.blog.pojo.User;
+import com.danxiaochong.blog.pojo.UserRole;
 import com.danxiaochong.blog.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.apache.commons.collections.CollectionUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -25,17 +25,17 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @ResponseBody
     @RequestMapping(value = "/modifyPassword", method = { RequestMethod.POST })
     public Map<String, Object> ModifyPassword(@RequestBody Map<String, String> params, HttpSession httpSession) {
         int code;
-        if (true) {
+        if (Utils.checkPassword(params.get("newPas"))) {
             User user = (User) httpSession.getAttribute("AUTH_USER");
             if (user != null) {
-                if (params.get("password").equals(user.getPassWord())) { // 口令验证
-                    user.setPassWord(params.get("newPas"));
+                if (Utils.enPassword(params.get("password")).equals(user.getUser_pass())) { // 口令验证
+                    user.setUser_pass(Utils.enPassword(params.get("newPas")));
                     code = userService.updateUser(user);
                     if (code == 0) {
                     }
@@ -59,13 +59,15 @@ public class UserController {
     public Map<String, Object> getRoleIDbyUser(HttpSession httpSession) {
         logger.info("获取用户基本信息");
         User user = (User) httpSession.getAttribute("AUTH_USER");
-        List<UserRole> roles = userService.getUserRole(user.getUserId());
-        List<MenuNode> menus = userService.buildUserMenu(user.getUserId());
+        List<UserRole> roles = userService.getUserRole(user.getUser_id());
+        List<MenuNode> menus = userService.buildUserMenu(user.getUser_id());
         Map<String, Object> ret = new HashMap<String, Object>();
-        ret.put("userId", user.getUserId());
-        ret.put("userName", user.getUserName());
+        ret.put("userId", user.getUser_id());
+        ret.put("userName", user.getUser_name());
+        ret.put("departmentId", user.getDepartment_id());
         ret.put("roles", roles);
         ret.put("menus", menus);
+        ret.put("idxUrl", user.getIdx_url());
         return ret;
     }
 

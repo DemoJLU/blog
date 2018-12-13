@@ -1,19 +1,18 @@
 package com.danxiaochong.blog.service;
 
-import com.danxiaochong.blog.pojo.system.MenuNode;
-import com.danxiaochong.blog.pojo.system.User;
-import com.danxiaochong.blog.pojo.system.UserRole;
+import com.danxiaochong.blog.pojo.MenuNode;
+import com.danxiaochong.blog.pojo.User;
+import com.danxiaochong.blog.pojo.UserRole;
 
 import java.util.List;
 
 public interface UserService {
+
+    User getUserById(String userId);
     /**
      * 登錄驗證
      * */
-    boolean hasMatchUser(String userName, String password);
-
-    User findUserByUserName(String userName);
-
+    boolean hasMatchUser(String user_id, String password);
     /**
      * 修改用戶信息
      * */
@@ -26,5 +25,9 @@ public interface UserService {
      * 加載菜單欄
      * */
     List<MenuNode> buildUserMenu(String userId);
+    /**
+     * 更新用戶首頁菜單
+     * */
+    int updateUserIdxUrl(String userId,String idx_url);
 
 }

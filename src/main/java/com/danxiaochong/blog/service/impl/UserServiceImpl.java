@@ -1,12 +1,11 @@
 package com.danxiaochong.blog.service.impl;
 
 import com.danxiaochong.blog.common.base.ErrCode;
-import com.danxiaochong.blog.mapper.LoginLogMapper;
 import com.danxiaochong.blog.mapper.UserMapper;
-import com.danxiaochong.blog.pojo.system.Function;
-import com.danxiaochong.blog.pojo.system.MenuNode;
-import com.danxiaochong.blog.pojo.system.User;
-import com.danxiaochong.blog.pojo.system.UserRole;
+import com.danxiaochong.blog.pojo.Function;
+import com.danxiaochong.blog.pojo.MenuNode;
+import com.danxiaochong.blog.pojo.User;
+import com.danxiaochong.blog.pojo.UserRole;
 import com.danxiaochong.blog.service.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -23,8 +22,16 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private LoginLogMapper loginLogMapper;
+
+    public User getUserById(String userId) {
+        User user = null;
+        try {
+            user = userMapper.getUserById(userId);
+        } catch (Exception e) {
+            logger.error("getUserById error: ", e);
+        }
+        return user;
+    }
 
     /**
      * 修改用戶信息
@@ -44,13 +51,15 @@ public class UserServiceImpl implements UserService {
     /**
      * 驗證登錄
      * */
-    public boolean hasMatchUser(String userName, String password) {
-        int matchCount = userMapper.getMatchCount(userName, password);
+    @Override
+    public boolean hasMatchUser(String user_id, String password) {
+        int matchCount = userMapper.getMatchCount(user_id, password);
         return matchCount > 0;
     }
     /**
      * 獲取用戶角色
      * */
+    @Override
     public List<UserRole> getUserRole(String userId) {
         List<UserRole> roles = null;
         try {
@@ -59,6 +68,23 @@ public class UserServiceImpl implements UserService {
             logger.error("getUserRole error: ", e);
         }
         return roles;
+    }
+    /**
+     * 更新用戶菜單
+     * */
+    @Override
+    public int updateUserIdxUrl(String userId, String idx_url) {
+        int errCode = 0;
+        try {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("user_id", userId);
+            map.put("idx_url", idx_url);
+            userMapper.updateUserUrl(map);
+        } catch (Exception e) {
+            logger.error("updateUserIdxUrl error: ", e);
+            errCode = ErrCode.DB_ERROR;
+        }
+        return errCode;
     }
     @Override
     public List<MenuNode> buildUserMenu(String userId) {
@@ -93,11 +119,4 @@ public class UserServiceImpl implements UserService {
         }
         return menus;
     }
-
-    public User findUserByUserName(String userName) {
-        return userMapper.findUserByUserName(userName);
-    }
-
-
-
 }

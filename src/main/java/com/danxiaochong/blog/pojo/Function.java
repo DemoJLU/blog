@@ -1,4 +1,4 @@
-package com.danxiaochong.blog.pojo.system;
+package com.danxiaochong.blog.pojo;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ public class Function implements Serializable {
 
     private String func_level;
 
-    private String func_desc;
+//    private String func_desc;
 
     private int show_order;
 
@@ -60,13 +60,13 @@ public class Function implements Serializable {
         this.func_level = func_level;
     }
 
-    public String getFunc_desc() {
-        return func_desc;
-    }
-
-    public void setFunc_desc(String func_desc) {
-        this.func_desc = func_desc;
-    }
+//    public String getFunc_desc() {
+//        return func_desc;
+//    }
+//
+//    public void setFunc_desc(String func_desc) {
+//        this.func_desc = func_desc;
+//    }
 
     public int getShow_order() {
         return show_order;

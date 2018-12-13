@@ -41,9 +41,7 @@ require(['config'], function (config) {
                     }),
                     success: function (msg) {
                         self.showError("成功");
-        				if (msg==1) {
-        					window.location.href = "./pages/index.html";
-        				}
+                        window.location.href = "./pages/index.html";
                     },
         			error: function(msg){
                         self.showError("登录异常，请检查数据库");

@@ -1,4 +1,4 @@
-package com.danxiaochong.blog.pojo.system;
+package com.danxiaochong.blog.pojo;
 
 import java.io.Serializable;
 

@@ -1,19 +1,20 @@
 package com.danxiaochong.blog.mapper;
 
-import com.danxiaochong.blog.pojo.system.Function;
-import com.danxiaochong.blog.pojo.system.User;
-import com.danxiaochong.blog.pojo.system.UserRole;
+import com.danxiaochong.blog.pojo.Function;
+import com.danxiaochong.blog.pojo.User;
+import com.danxiaochong.blog.pojo.UserRole;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UserMapper {
     /**
      * 驗證登錄
      * */
-    int getMatchCount(@Param(value = "userName")String userName, @Param(value = "passWord")String passWord);
+    int getMatchCount(@Param(value = "user_id")String user_id, @Param(value = "passWord")String passWord);
     /**
      * 修改用戶信息
      * */
@@ -26,8 +27,10 @@ public interface UserMapper {
      * 加載菜單欄
      * */
     List<Function> queryFuncByUser(String userId);
+    /**
+     * 更新用戶菜單
+     * */
+    void updateUserUrl(Map<String, Object> map);
 
-    User findUserByUserName(String userName);
-
-//    void updateLoginInfo(system user);
+    User getUserById(String userId);
 }
