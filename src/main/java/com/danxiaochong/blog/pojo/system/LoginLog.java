@@ -1,4 +1,4 @@
-package com.danxiaochong.blog.pojo;
+package com.danxiaochong.blog.pojo.system;
 
 import java.io.Serializable;
 import java.util.Date;

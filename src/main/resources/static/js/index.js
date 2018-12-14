@@ -81,84 +81,84 @@ require(['config'], function (config) {
             $('#user-index').val(user.idxUrl);
         });
 
-        // $("#subIdx").on('click', function (e) {
-        //     e.preventDefault();
-        //     //判断修改首页是否与当前首页相同
-        //     if(user.idxUrl == $('#user-index').val()){
-        //     	$('#updateModal').modal('show');
-        //     }
-        //     if (user.idxUrl != $('#user-index').val()) {
-        //         $.ajax({
-        //             url: config.basePath + '/user/modifyIdxUrl',
-        //             type: 'POST',
-        //             data: $.param({
-        //                 userId: user.userId,
-        //                 idxUrl: $('#user-index').val()
-        //             }),
-        //             dataType: 'json',
-        //             success: function (result) {
-        //                 if (result.code != 0) {
-        //                     alert(result.msg);
-        //                 } else {
-        //                     user.idxUrl = $('#user-index').val();
-        //                   //首页修改完成后自动刷新页面
-        //                     window.location.reload();
-        //                 }
-        //             }
-        //         });
-        //     }
-        // });
+        $("#subIdx").on('click', function (e) {
+            e.preventDefault();
+            //判断修改首页是否与当前首页相同
+            if(user.idxUrl == $('#user-index').val()){
+            	$('#updateModal').modal('show');
+            }
+            if (user.idxUrl != $('#user-index').val()) {
+                $.ajax({
+                    url: config.basePath + '/user/modifyIdxUrl',
+                    type: 'POST',
+                    data: $.param({
+                        userId: user.userId,
+                        idxUrl: $('#user-index').val()
+                    }),
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.code != 0) {
+                            alert(result.msg);
+                        } else {
+                            user.idxUrl = $('#user-index').val();
+                          //首页修改完成后自动刷新页面
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        });
 
-        // $("#btnModifyPsOk").on('click', function (e) {
-        //     e.preventDefault();
-        //     if ($('#old-ps').val() == '' || $('#new-ps').val() == "" || $('#cf-ps').val() == "") {
-        //     	$('#noModal').modal('show');
-        //         //清空密码输入框
-        //         $('#old-ps').val("");
-        //         $('#new-ps').val("");
-        //         $('#cf-ps').val("");
-        //         return false;
-        //     } else {
-        //         if ($('#new-ps').val() != $('#cf-ps').val()) {
-        //         	$('#noSameModal').modal('show');
-        //             //清空密码输入框
-        //             $('#old-ps').val("");
-        //             $('#new-ps').val("");
-        //             $('#cf-ps').val("");
-        //             return false;
-        //         } else {
-        //             $.ajax({
-        //                 url: config.basePath + '/user/modifyPassword',
-        //                 type: 'POST',
-        //                 contentType: 'application/json',
-        //                 data: JSON.stringify({
-        //                     userId: user.userId,
-        //                     password: $('#old-ps').val(),
-        //                     newPas: $('#new-ps').val()
-        //                 }),
-        //                 dataType: "json",
-        //                 success: function(result) {
-        //                     if (result.code != 0) {
-        //                         alert(result.msg);
-        //                         //清空密码输入框
-        //                         $('#old-ps').val("");
-        //                         $('#new-ps').val("");
-        //                         $('#cf-ps').val("");
-        //                         return false;
-        //                     } else {
-        //                     	$('#updatePassModal').modal('show');
-        //                         //清空密码输入框
-        //                         $('#old-ps').val("");
-        //                         $('#new-ps').val("");
-        //                         $('#cf-ps').val("");
-        //                         //隐藏密码修改页面
-        //                         $('#userInfoModal').modal('hide');
-        //                     }
-        //                 }
-        //             });
-        //         }
-        //     }
-        // });
+        $("#btnModifyPsOk").on('click', function (e) {
+            e.preventDefault();
+            if ($('#old-ps').val() == '' || $('#new-ps').val() == "" || $('#cf-ps').val() == "") {
+            	$('#noModal').modal('show');
+                //清空密码输入框
+                $('#old-ps').val("");
+                $('#new-ps').val("");
+                $('#cf-ps').val("");
+                return false;
+            } else {
+                if ($('#new-ps').val() != $('#cf-ps').val()) {
+                	$('#noSameModal').modal('show');
+                    //清空密码输入框
+                    $('#old-ps').val("");
+                    $('#new-ps').val("");
+                    $('#cf-ps').val("");
+                    return false;
+                } else {
+                    $.ajax({
+                        url: config.basePath + '/user/modifyPassword',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            userId: user.userId,
+                            password: $('#old-ps').val(),
+                            newPas: $('#new-ps').val()
+                        }),
+                        dataType: "json",
+                        success: function(result) {
+                            if (result.code != 0) {
+                                alert(result.msg);
+                                //清空密码输入框
+                                $('#old-ps').val("");
+                                $('#new-ps').val("");
+                                $('#cf-ps').val("");
+                                return false;
+                            } else {
+                            	$('#updatePassModal').modal('show');
+                                //清空密码输入框
+                                $('#old-ps').val("");
+                                $('#new-ps').val("");
+                                $('#cf-ps').val("");
+                                //隐藏密码修改页面
+                                $('#userInfoModal').modal('hide');
+                            }
+                        }
+                    });
+                }
+            }
+        });
     });
 
 });

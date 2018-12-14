@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.danxiaochong.blog.mapper.note.MemoMapper">
+
+    <select id="getMemoList" parameterType="Map" resultType="com.danxiaochong.blog.pojo.note.Memo">
+        select p.*
+        from tbl_memo p
+        where p.status = 0
+        <if test='memo_start_time!="" and memo_start_time!=null'>
+            AND p.memo_start_time >= #{memo_start_time}
+        </if>
+        <if test='memo_end_time!="" and memo_end_time!=null'>
+            AND p.memo_end_time  &lt;= #{memo_end_time}
+        </if>
+        <if test='input_time!="" and input_time!=null'>
+            AND p.INPUT_TIME =#{input_time}
+        </if>
+        <if test='matter!="" and matter!=null'>
+            AND p.matter =#{matter}
+        </if>
+        ORDER BY p.memo_start_time ASC,p.PRIORITY DESC
+    </select>
+
+</mapper>

@@ -1,6 +1,6 @@
 package com.danxiaochong.blog.controlller;
 
-import com.danxiaochong.blog.pojo.User;
+import com.danxiaochong.blog.pojo.system.User;
 import com.danxiaochong.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 import java.util.Map;
 
 @Controller

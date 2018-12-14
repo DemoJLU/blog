@@ -2,9 +2,9 @@ package com.danxiaochong.blog.controlller;
 
 import com.danxiaochong.blog.common.Utils;
 import com.danxiaochong.blog.common.base.ErrCode;
-import com.danxiaochong.blog.pojo.MenuNode;
-import com.danxiaochong.blog.pojo.User;
-import com.danxiaochong.blog.pojo.UserRole;
+import com.danxiaochong.blog.pojo.system.MenuNode;
+import com.danxiaochong.blog.pojo.system.User;
+import com.danxiaochong.blog.pojo.system.UserRole;
 import com.danxiaochong.blog.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

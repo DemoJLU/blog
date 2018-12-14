@@ -36,21 +36,23 @@
                 </h3>
                 <form>
                     <div class="form-group">
-                        <label for="task_starttime" class="control-label">开始时间：</label>
-                        <input class="form-control" id="task_starttime">
+                        <label for="memo_start_time" class="control-label">开始时间：</label>
+                        <input class="form-control" id="memo_start_time">
                     </div>
                     <div class="form-group">
-                        <label for="rpEndTime" class="control-label">结束时间：</label>
-                        <input class="form-control" id="rpEndTime">
+                        <label for="memo_end_time" class="control-label">结束时间：</label>
+                        <input class="form-control" id="memo_end_time">
                     </div>
                     <div class="form-group">
                         <label for="input_time" class="control-label">录入时间：</label>
                         <input class="form-control" id="input_time">
                     </div>
                     <div class=" form-group">
-                        <label for="matter_get" class="control-label">事项：</label>
-                        <select class="form-control" id="matter_get">
-                            <option value="404">全部</option>
+                        <label for="matter" class="control-label">事项：</label>
+                        <select class="form-control" id="matter">
+                            <option value="0">工作</option>
+                            <option value="1">生活</option>
+                            <option value="2">全部</option>
                         </select>
                     </div>
                     <div class=" form-group">
@@ -161,108 +163,108 @@
         </div>
     </div>
 </div>
-<!-- 新的第二层调车框 是 -->
-<div class="modal fade" id="repairModalNew1" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">
-    <div class="modal-dialog" role="document" style="width: 800px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    &times;
-                </button>
-                <h4 class="modal-title" id="repairModalLabel">库内调车任务信息</h4>
-            </div>
-            <div class="modal-body">
-                <form class="inline-block">
-                    <div class="col-sm-4 form-group">
-                        <label for="rpStartTime" class="control-label"><span style="color:red">*</span>一事一令下达时间：</label>
-                        <input class="form-control" id="rpStartTimeYes" required>
-                    </div>
-                    <div class="col-sm-4 form-group">
-                        <label for="dayNightType" class="control-label"><span style="color:red">*</span>白夜班：</label>
-                        <select class="form-control" id="dayNightTypeYes" required  >
-                            <option value="1">当日夜班</option>
-                            <option value="0">次日白班</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4 form-group">
-                        <label for="matter" class="control-label">事项：</label>
-                        <select class="form-control" id="matterYes" required  >
-                        </select>
-                    </div>
+<!--&lt;!&ndash; 新的第二层调车框 是 &ndash;&gt;-->
+<!--<div class="modal fade" id="repairModalNew1" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">-->
+    <!--<div class="modal-dialog" role="document" style="width: 800px;">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                    <!--&times;-->
+                <!--</button>-->
+                <!--<h4 class="modal-title" id="repairModalLabel">库内调车任务信息</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<form class="inline-block">-->
+                    <!--<div class="col-sm-4 form-group">-->
+                        <!--<label for="rpStartTime" class="control-label"><span style="color:red">*</span>一事一令下达时间：</label>-->
+                        <!--<input class="form-control" id="rpStartTimeYes" required>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-4 form-group">-->
+                        <!--<label for="dayNightType" class="control-label"><span style="color:red">*</span>白夜班：</label>-->
+                        <!--<select class="form-control" id="dayNightTypeYes" required  >-->
+                            <!--<option value="1">当日夜班</option>-->
+                            <!--<option value="0">次日白班</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-4 form-group">-->
+                        <!--<label for="matter" class="control-label">事项：</label>-->
+                        <!--<select class="form-control" id="matterYes" required  >-->
+                        <!--</select>-->
+                    <!--</div>-->
 
-                    <div class="col-sm-2 form-group">
-                        <label for="train_number" class="control-label"><span style="color:red">*</span>车次：</label>
-                        <input id="train_numberYes" class="form-control" required>
-                    </div>
-                    <div class="col-sm-2 form-group">
-                        <label for="task_cycleYes" class="control-label"><span style="color:red">*</span>周期：</label>
-                        <select class="form-control" id="task_cycleYes" required  >
-                            <option value="1">1天</option>
-                            <option value="2">2天</option>
-                            <option value="3">3天</option>
-                            <option value="4">4天</option>
-                            <option value="5">5天</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4 form-group">
-                        <label for="priority" class="control-label"><span style="color:red">*</span>优先级：</label>
-                        <select class="form-control" id="priorityYes" required  >
-                        </select>
-                    </div>
-                    <div class="col-sm-4 form-group">
-                        <label for="rpEndTime" class="control-label">最后期限：</label>
-                        <input id="rpEndTimeYes" class="form-control" >
-                    </div>
-                    <div class="col-sm-12 form-group" >
-                        <span id="fullTrainNum" style="position: absolute;left:3%;top:-3px;color: blue"></span>
-                        <label for="command_content" class="control-label" style="margin-top:20px;"><span style="color:red">*</span>内容：</label>
-                        <textarea id="command_contentYes" class="form-control" rows="3" style="margin: 0px; width: 100%; height: 66px;" required></textarea>
-                    </div>
-                    <input id="input_user"  type="hidden" />
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button id="btnSaveYes" type="button" class="btn btn-primary">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 新的第二层调车框 否-->
-<div class="modal fade" id="repairModalNew2" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">
-    <div class="modal-dialog" role="document" style="width: 800px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    &times;
-                </button>
-                <h4 class="modal-title" id="repairModalLabel">非库内调车任务信息</h4>
-            </div>
-            <div class="modal-body">
-                <form class="inline-block">
-                    <div class="col-sm-4 form-group">
-                        <label for="rpStartTime" class="control-label"><span style="color:red">*</span>一事一令下达时间：</label>
-                        <input class="form-control" id="rpStartTime" required>
-                    </div>
-                    <div class="col-sm-4 form-group">
-                        <label for="matter" class="control-label">事项：</label>
-                        <select class="form-control" id="matter" required  >
-                        </select>
-                    </div>
-                    <div class="col-sm-8 form-group">
-                        <label for="command_content" class="control-label" style="margin-top:-20px;"><span style="color:red">*</span>内容：</label>
-                        <textarea id="command_content" class="form-control" rows="3" style="margin: 0px; width: 500px; height: 66px;" required></textarea>
-                    </div>
-                    <input id="input_user"  type="hidden" />
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button id="btn_save" type="button" class="btn btn-primary">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
+                    <!--<div class="col-sm-2 form-group">-->
+                        <!--<label for="train_number" class="control-label"><span style="color:red">*</span>车次：</label>-->
+                        <!--<input id="train_numberYes" class="form-control" required>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-2 form-group">-->
+                        <!--<label for="task_cycleYes" class="control-label"><span style="color:red">*</span>周期：</label>-->
+                        <!--<select class="form-control" id="task_cycleYes" required  >-->
+                            <!--<option value="1">1天</option>-->
+                            <!--<option value="2">2天</option>-->
+                            <!--<option value="3">3天</option>-->
+                            <!--<option value="4">4天</option>-->
+                            <!--<option value="5">5天</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-4 form-group">-->
+                        <!--<label for="priority" class="control-label"><span style="color:red">*</span>优先级：</label>-->
+                        <!--<select class="form-control" id="priorityYes" required  >-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-4 form-group">-->
+                        <!--<label for="rpEndTime" class="control-label">最后期限：</label>-->
+                        <!--<input id="rpEndTimeYes" class="form-control" >-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-12 form-group" >-->
+                        <!--<span id="fullTrainNum" style="position: absolute;left:3%;top:-3px;color: blue"></span>-->
+                        <!--<label for="command_content" class="control-label" style="margin-top:20px;"><span style="color:red">*</span>内容：</label>-->
+                        <!--<textarea id="command_contentYes" class="form-control" rows="3" style="margin: 0px; width: 100%; height: 66px;" required></textarea>-->
+                    <!--</div>-->
+                    <!--<input id="input_user"  type="hidden" />-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <!--<button id="btnSaveYes" type="button" class="btn btn-primary">确定</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; 新的第二层调车框 否&ndash;&gt;-->
+<!--<div class="modal fade" id="repairModalNew2" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">-->
+    <!--<div class="modal-dialog" role="document" style="width: 800px;">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                    <!--&times;-->
+                <!--</button>-->
+                <!--<h4 class="modal-title" id="repairModalLabel">非库内调车任务信息</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<form class="inline-block">-->
+                    <!--<div class="col-sm-4 form-group">-->
+                        <!--<label for="rpStartTime" class="control-label"><span style="color:red">*</span>一事一令下达时间：</label>-->
+                        <!--<input class="form-control" id="rpStartTime" required>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-4 form-group">-->
+                        <!--<label for="matter" class="control-label">事项：</label>-->
+                        <!--<select class="form-control" id="matter" required  >-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-8 form-group">-->
+                        <!--<label for="command_content" class="control-label" style="margin-top:-20px;"><span style="color:red">*</span>内容：</label>-->
+                        <!--<textarea id="command_content" class="form-control" rows="3" style="margin: 0px; width: 500px; height: 66px;" required></textarea>-->
+                    <!--</div>-->
+                    <!--<input id="input_user"  type="hidden" />-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                <!--<button id="btn_save" type="button" class="btn btn-primary">确定</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 <!-- RepairModal -->
 <div class="modal fade" id="repairModal" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">
     <div class="modal-dialog" role="document" style="width: 800px;">
@@ -387,6 +389,6 @@
         </div>
     </div>
 </div>
-<script src="../../js/lib/require.js" data-main="../js/planning/dayShiftPlan"></script>
+<script src="../../js/lib/require.js" data-main="../../js/note/memo"></script>
 </body>
 </html>

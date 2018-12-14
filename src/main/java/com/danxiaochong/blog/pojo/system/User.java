@@ -1,4 +1,4 @@
-package com.danxiaochong.blog.pojo;
+package com.danxiaochong.blog.pojo.system;
 
 import com.danxiaochong.blog.common.DateConvertor;
 

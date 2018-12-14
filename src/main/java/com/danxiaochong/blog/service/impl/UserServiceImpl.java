@@ -2,10 +2,10 @@ package com.danxiaochong.blog.service.impl;
 
 import com.danxiaochong.blog.common.base.ErrCode;
 import com.danxiaochong.blog.mapper.UserMapper;
-import com.danxiaochong.blog.pojo.Function;
-import com.danxiaochong.blog.pojo.MenuNode;
-import com.danxiaochong.blog.pojo.User;
-import com.danxiaochong.blog.pojo.UserRole;
+import com.danxiaochong.blog.pojo.system.Function;
+import com.danxiaochong.blog.pojo.system.MenuNode;
+import com.danxiaochong.blog.pojo.system.User;
+import com.danxiaochong.blog.pojo.system.UserRole;
 import com.danxiaochong.blog.service.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
