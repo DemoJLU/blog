@@ -11,7 +11,7 @@ public class Memo {
     private String matter;
     private String memo_content;
     private String input_persion;
-    private Date nput_time;
+    private Date input_time;
     private int status;
 
     public int getId() {
@@ -78,12 +78,12 @@ public class Memo {
         this.input_persion = input_persion;
     }
 
-    public Date getNput_time() {
-        return nput_time;
+    public Date getInput_time() {
+        return input_time;
     }
 
-    public void setNput_time(Date nput_time) {
-        this.nput_time = nput_time;
+    public void setInput_time(Date input_time) {
+        this.input_time = input_time;
     }
 
     public int getStatus() {

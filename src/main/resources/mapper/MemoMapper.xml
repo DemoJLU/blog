@@ -3,7 +3,8 @@
 <mapper namespace="com.danxiaochong.blog.mapper.note.MemoMapper">
 
     <select id="getMemoList" parameterType="Map" resultType="com.danxiaochong.blog.pojo.note.Memo">
-        select p.*
+        select p.id,p.memo_id,date_format(p.memo_start_time, '%Y-%m-%d') as memo_start_time,date_format(p.memo_end_time, '%Y-%m-%d') as memo_end_time,p.priority,p.matter,p.memo_content,p.input_persion,date_format(p.input_time, '%Y-%m-%d') as input_time ,
+        p.status
         from tbl_memo p
         where p.status = 0
         <if test='memo_start_time!="" and memo_start_time!=null'>
@@ -13,7 +14,7 @@
             AND p.memo_end_time  &lt;= #{memo_end_time}
         </if>
         <if test='input_time!="" and input_time!=null'>
-            AND p.INPUT_TIME =#{input_time}
+            AND p.input_time =#{input_time}
         </if>
         <if test='matter!="" and matter!=null'>
             AND p.matter =#{matter}

@@ -93,25 +93,23 @@ require(['../config'], function (config) {
                     d.memo_start_time=$('#memo_start_time').val();
                     d.task_endtime=$('#memo_end_time').val();
                     d.input_time=$('#input_time').val();
-                    d.vehicle_id=$('#vehicle_id').val();
                     d.matter_get=$('#matter_get').val();
-                    d.departmentId = user.departmentId;
                     d.done = $('#done').val();
                 }
             },
             columns: [
-                { className: "text-center",width:"4%",visible:false,
+                { className: "text-center",width:"5%",visible:false,
                     render: function (data, type, full, meta) {
                         return '<input type="checkbox" class="checkchild"/>';
                     }
                 },
                 { data: null,width:"5%"},
-                { data: 'memo_start_time',width:"8%",
+                { data: 'memo_start_time',width:"10%",
                     render: function (data){
                         return data==null?"":data.split(" ")[0];
                     }
                 },
-                { data: 'matter',width:"7%"},
+                { data: 'matter',width:"10%"},
                 { data: 'priority',width:"5%",
                     render: function (data){
                         if(data==1){
@@ -127,14 +125,14 @@ require(['../config'], function (config) {
                         }
                     }
                 },
-                { data: 'memo_end_time',width:"8%",
+                { data: 'memo_end_time',width:"10%",
                     render: function (data){
                         return data==null?"":data.split(" ")[0];
                     }
                 },
-                { data: 'memo_content',width:"20%"},
-                { data: 'input_persion',width:"6%"},
-                { data: 'input_time',width:"8%",
+                { data: 'memo_content',width:"25%"},
+                { data: 'input_persion',width:"10%"},
+                { data: 'input_time',width:"10%",
                     render: function (data){
                         return data==null?"":data.split(" ")[0];
                     }
@@ -560,9 +558,9 @@ require(['../config'], function (config) {
             }
         }
         //加载消息滚动
-        getExpireNoticeDetail();
-        //触摸清空定时器,展开关闭窗口
-        expireNoticeDetailScroll();
+        // getExpireNoticeDetail();
+        // //触摸清空定时器,展开关闭窗口
+        // expireNoticeDetailScroll();
         //清空查询框,重置、刷新查询
         $('#btnReset, #btnRefresh').on('click', function (e) {
             ResetTd();
@@ -592,134 +590,134 @@ require(['../config'], function (config) {
         }
 
         //比对车底号  如Z198/5-Z196/7
-        function isTrainNum(allNum,inputNum){
-            var ret=false;
-            if(allNum!=null&&allNum!=""){
-                var allNumArr=allNum.split("-");
-                for(var j=allNumArr.length-1;j>=0;j--){
-                    var lastAllNum=allNumArr[j];
-                    if(lastAllNum!=null&&lastAllNum!=""){
-                        if(lastAllNum.indexOf("/")>0){
-                            var lastAllNumArr=lastAllNum.split("/");
-                            var n2=lastAllNumArr[lastAllNumArr.length-1];
-                            var n1=lastAllNumArr[0].substring(0,lastAllNumArr[0].length-n2.length);
-                            var newNum=n1+n2;
-                            if(inputNum==newNum){
-                                ret=true;
-                                break;
-                            }
-                        }else{
-                            if(inputNum==lastAllNum){
-                                ret=true;
-                                break;
-                            }
-                        }
-                    }
-
-                }
-            }
-            return ret;
-        }
+        // function isTrainNum(allNum,inputNum){
+        //     var ret=false;
+        //     if(allNum!=null&&allNum!=""){
+        //         var allNumArr=allNum.split("-");
+        //         for(var j=allNumArr.length-1;j>=0;j--){
+        //             var lastAllNum=allNumArr[j];
+        //             if(lastAllNum!=null&&lastAllNum!=""){
+        //                 if(lastAllNum.indexOf("/")>0){
+        //                     var lastAllNumArr=lastAllNum.split("/");
+        //                     var n2=lastAllNumArr[lastAllNumArr.length-1];
+        //                     var n1=lastAllNumArr[0].substring(0,lastAllNumArr[0].length-n2.length);
+        //                     var newNum=n1+n2;
+        //                     if(inputNum==newNum){
+        //                         ret=true;
+        //                         break;
+        //                     }
+        //                 }else{
+        //                     if(inputNum==lastAllNum){
+        //                         ret=true;
+        //                         break;
+        //                     }
+        //                 }
+        //             }
+        //
+        //         }
+        //     }
+        //     return ret;
+        // }
         //长效命令到期提示滚动
-        function getExpireNoticeDetail(){
-            $.ajax({
-                url: config.basePath + '/planning/commandNotice/listExpireNoticeDetailInfo',
-                type: 'post',
-                data: null,
-                //contentType: 'application/json',
-                dataType: 'json',
-                success: function (ret) {
-                    var msg=ret.data;
-                    //获得当前<ul>
-                    var $uList = $("#scrollBox ul");
-                    $uList.empty();
-                    //var scrollTimer = null;
-                    if(msg!=null&&msg.length>0){
-                        detailSize=msg.length;
-                        $("#noticeDetailSize").text(msg.length);
-                        for(var i=0;i<msg.length;i++){
-                            $uList.append('<li><a title="'+msg[i].detail_content+'" data-cmdNum="'+msg[i].command_num+'">'+(i+1)+'、【'+msg[i].command_num+'号第'+msg[i].detail_order+'项】'+formatText(msg[i].detail_content,35)+'</a></li>');
-                        }
-                    }else{
-                        detailSize=0;
-                        $("#noticeDetailSize").text("0");
-                        $uList.append('<li><a href="#">未查询到相关到期命令。</a></li>')
-                    }
-                }
-            });
-        }
+        // function getExpireNoticeDetail(){
+        //     $.ajax({
+        //         url: config.basePath + '/planning/commandNotice/listExpireNoticeDetailInfo',
+        //         type: 'post',
+        //         data: null,
+        //         //contentType: 'application/json',
+        //         dataType: 'json',
+        //         success: function (ret) {
+        //             var msg=ret.data;
+        //             //获得当前<ul>
+        //             var $uList = $("#scrollBox ul");
+        //             $uList.empty();
+        //             //var scrollTimer = null;
+        //             if(msg!=null&&msg.length>0){
+        //                 detailSize=msg.length;
+        //                 $("#noticeDetailSize").text(msg.length);
+        //                 for(var i=0;i<msg.length;i++){
+        //                     $uList.append('<li><a title="'+msg[i].detail_content+'" data-cmdNum="'+msg[i].command_num+'">'+(i+1)+'、【'+msg[i].command_num+'号第'+msg[i].detail_order+'项】'+formatText(msg[i].detail_content,35)+'</a></li>');
+        //                 }
+        //             }else{
+        //                 detailSize=0;
+        //                 $("#noticeDetailSize").text("0");
+        //                 $uList.append('<li><a href="#">未查询到相关到期命令。</a></li>')
+        //             }
+        //         }
+        //     });
+        // }
         //触摸清空定时器,展开关闭窗口
-        function expireNoticeDetailScroll(){
-            var $uList = $("#scrollBox ul");
-            $uList.hover(function () {
-                clearInterval(scrollTimer);
-            },function () {//离开启动定时器
-                scrollTimer = setInterval(function () {
-                    scrollList($uList);
-                },5000);
-            }).trigger("mouseleave"); //自动触发触摸事件
-            $("#noticeDetailAlert .close .glyphicon-chevron-down").click(function(){
-                $(this).hide();
-                $(this).siblings().show();
-                if(detailSize>1){
-                    $("#noticeDetailAlert").css("height",detailSize*50);
-                }else{
-                    $("#noticeDetailAlert").css("height",50);
-                }
-            })
-            $("#noticeDetailAlert .close .glyphicon-chevron-up").click(function(){
-                $(this).hide();
-                $(this).siblings().show();
-                $("#noticeDetailAlert").css("height",50);
-            })
-            $("#scrollBox ul").on('click', 'li a', function () {
-                var $uList = $("#scrollBox ul");
-                scrollTimer = setInterval(function () {
-                    scrollList($uList);
-                },5000);
-                var cmdNum=$(this).attr("data-cmdNum"); //获取a标签存储的命令号
-                window.parent.noticeDetailCmdNum=cmdNum;  //多条页面传参
-                var tabId="commandNotice";
-                var dir="planning";
-                var tabName="长效命令公告";
-                var index=$(window.parent.document);
-                if (index.find('#' + tabId).length == 0) {
-                    var title = $('<a href="#' + tabId + '" role="' + dir + '" data-toggle="tab">' + tabName + '</a>');
-                    if (index.find('.nav-tabs li').length > 0) {
-                        title.append('<i class="close">&times;</i>');
-                    }
-                    //console.log($('.tab-content'));
-                    index.find('.nav-tabs').append($('<li id="tab_' + tabId + '"></li>').append(title));
-                    index.find('.tab-content').append('<div id="'+ tabId + '" role="tabpanel" class="tab-pane active"></div>');
-                    // $('#' + tabId).load('./' + dir + '/' + tabId + '.html');
-                    index.find('#' + tabId).append('<iframe scrolling="auto" frameborder="0" src="./' + dir + '/' + tabId + '.html" style="width:100%;height:'+(document.documentElement.clientHeight-0)+'px;overflow:hidden;"></iframe>');
-                }
-                index.find('#tab_' + tabId).addClass('active').siblings().removeClass('active');
-                index.find('#' + tabId).addClass('active').siblings().removeClass('active');
-                var aaa=index.find('#' + tabId).find("iframe")[0].contentDocument;
-                //$(aaa).find("#btnReset").click();
-                $(aaa).find("#commandNumQuery").val(cmdNum);
-                $(aaa).find("#commandTypeQuery").val("");
-                $(aaa).find("#commandContentQuery").val("");
-                $(aaa).find("#btnQuery").click();
-            })
-        }
+        // function expireNoticeDetailScroll(){
+        //     var $uList = $("#scrollBox ul");
+        //     $uList.hover(function () {
+        //         clearInterval(scrollTimer);
+        //     },function () {//离开启动定时器
+        //         scrollTimer = setInterval(function () {
+        //             scrollList($uList);
+        //         },5000);
+        //     }).trigger("mouseleave"); //自动触发触摸事件
+        //     $("#noticeDetailAlert .close .glyphicon-chevron-down").click(function(){
+        //         $(this).hide();
+        //         $(this).siblings().show();
+        //         if(detailSize>1){
+        //             $("#noticeDetailAlert").css("height",detailSize*50);
+        //         }else{
+        //             $("#noticeDetailAlert").css("height",50);
+        //         }
+        //     })
+        //     $("#noticeDetailAlert .close .glyphicon-chevron-up").click(function(){
+        //         $(this).hide();
+        //         $(this).siblings().show();
+        //         $("#noticeDetailAlert").css("height",50);
+        //     })
+        //     $("#scrollBox ul").on('click', 'li a', function () {
+        //         var $uList = $("#scrollBox ul");
+        //         scrollTimer = setInterval(function () {
+        //             scrollList($uList);
+        //         },5000);
+        //         var cmdNum=$(this).attr("data-cmdNum"); //获取a标签存储的命令号
+        //         window.parent.noticeDetailCmdNum=cmdNum;  //多条页面传参
+        //         var tabId="commandNotice";
+        //         var dir="planning";
+        //         var tabName="长效命令公告";
+        //         var index=$(window.parent.document);
+        //         if (index.find('#' + tabId).length == 0) {
+        //             var title = $('<a href="#' + tabId + '" role="' + dir + '" data-toggle="tab">' + tabName + '</a>');
+        //             if (index.find('.nav-tabs li').length > 0) {
+        //                 title.append('<i class="close">&times;</i>');
+        //             }
+        //             //console.log($('.tab-content'));
+        //             index.find('.nav-tabs').append($('<li id="tab_' + tabId + '"></li>').append(title));
+        //             index.find('.tab-content').append('<div id="'+ tabId + '" role="tabpanel" class="tab-pane active"></div>');
+        //             // $('#' + tabId).load('./' + dir + '/' + tabId + '.html');
+        //             index.find('#' + tabId).append('<iframe scrolling="auto" frameborder="0" src="./' + dir + '/' + tabId + '.html" style="width:100%;height:'+(document.documentElement.clientHeight-0)+'px;overflow:hidden;"></iframe>');
+        //         }
+        //         index.find('#tab_' + tabId).addClass('active').siblings().removeClass('active');
+        //         index.find('#' + tabId).addClass('active').siblings().removeClass('active');
+        //         var aaa=index.find('#' + tabId).find("iframe")[0].contentDocument;
+        //         //$(aaa).find("#btnReset").click();
+        //         $(aaa).find("#commandNumQuery").val(cmdNum);
+        //         $(aaa).find("#commandTypeQuery").val("");
+        //         $(aaa).find("#commandContentQuery").val("");
+        //         $(aaa).find("#btnQuery").click();
+        //     })
+        // }
         //滚动动画
-        function scrollList(obj) {
-            //获得当前<li>的高度
-            var scrollHeight = $("ul li:first").height();
-            //滚动出一个<li>的高度
-            obj.stop().animate({marginTop:-scrollHeight},900,function () {
-                //动画结束后，将当前<ul>marginTop置为初始值0状态，再将第一个<li>拼接到末尾。
-                obj.css({marginTop:0}).find("li:first").appendTo(obj);
-            });
-        }
+        // function scrollList(obj) {
+        //     //获得当前<li>的高度
+        //     var scrollHeight = $("ul li:first").height();
+        //     //滚动出一个<li>的高度
+        //     obj.stop().animate({marginTop:-scrollHeight},900,function () {
+        //         //动画结束后，将当前<ul>marginTop置为初始值0状态，再将第一个<li>拼接到末尾。
+        //         obj.css({marginTop:0}).find("li:first").appendTo(obj);
+        //     });
+        // }
         //省略长字符串
-        function formatText(str,size){
-            if(str.length>size){
-                str=str.substring(0,size-3)+"...";
-            }
-            return str;
-        }
+        // function formatText(str,size){
+        //     if(str.length>size){
+        //         str=str.substring(0,size-3)+"...";
+        //     }
+        //     return str;
+        // }
     });
 });

@@ -35,7 +35,7 @@ public class LoginController {
         String password = params.get("password");
         boolean flag = userService.hasMatchUser(user_id,password);
         String code = "1";
-        if (flag){
+        if (!flag){
             code = "0";
         }else{
             User user = userService.getUserById(user_id);

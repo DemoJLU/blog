@@ -40,7 +40,7 @@ require(['config'], function (config) {
                     	password: self.password.val()
                     }),
                     success: function (msg) {
-                        if(msg){
+                        if(msg == "1"){
                             self.showError("成功");
                             window.location.href = "./pages/index.html";
                         }

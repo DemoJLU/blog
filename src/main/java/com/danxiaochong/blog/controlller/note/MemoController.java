@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,8 @@ import java.util.Map;
 public class MemoController {
     private static final Logger LOG = LoggerFactory.getLogger(MemoController.class);
 
+    static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
     @Autowired
     private MemoService memoService;
 
@@ -31,13 +35,13 @@ public class MemoController {
      */
     @RequestMapping(value = "list", method = { RequestMethod.POST })
     @ResponseBody
-    public DataTable<Memo> MemoList(@RequestParam String memo_start_time,String memo_end_time,String input_time, String matter) {
+    public DataTable<Memo> MemoList(@RequestParam String memo_start_time,String memo_end_time,String input_time, String matter) throws ParseException {
         LOG.info("查询指定时间段任务");
         Map<String, String> params = new HashMap<>();
         params.put("memo_start_time", "2018-08-08");
-        params.put("memo_end_time", "2018-12-13");
+        params.put("memo_end_time", "2018-12-15");
         params.put("input_time", input_time);
-        params.put("matter", "0");
+        params.put("matter", "工作");
         DataTable<Memo> ret = new DataTable<>();
         List<Memo> list = new ArrayList<>();
         list = memoService.getMemoList(params);
