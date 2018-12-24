@@ -40,8 +40,10 @@ require(['config'], function (config) {
                     	password: self.password.val()
                     }),
                     success: function (msg) {
-                        self.showError("成功");
-                        window.location.href = "./pages/index.html";
+                        if(msg){
+                            self.showError("成功");
+                            window.location.href = "./pages/index.html";
+                        }
                     },
         			error: function(msg){
                         self.showError("登录异常，请检查数据库");

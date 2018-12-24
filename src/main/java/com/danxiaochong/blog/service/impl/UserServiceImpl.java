@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Override
     public User getUserById(String userId) {
         User user = null;
         try {
@@ -54,7 +55,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean hasMatchUser(String user_id, String password) {
         int matchCount = userMapper.getMatchCount(user_id, password);
-        return matchCount > 0;
+        if (matchCount >0){
+            return true;
+        }else {
+            return false;
+        }
     }
     /**
      * 獲取用戶角色
