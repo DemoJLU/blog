@@ -2,8 +2,7 @@
 require(['../config'], function (config) {
     var user=window.parent.user;//记录登录用户
 
-    var form = $('#form1');//上传文件
-    var formdata = new FormData(form);
+
 
     initDatetimepicker();
     //初始化时间框
@@ -17,22 +16,7 @@ require(['../config'], function (config) {
         });
     }
 
-    $('#upLoad').on('click', function (e) {
-        $.ajax({
-            type : "POST",
-            url : config.basePath + '/memo/list',
-            data : formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success : function(msg) {
-                if(msg){
-                    alert('提交成功！');
-                }
-            }
-        });
-    });
+
 
     //格式化输出时间
     function getMyDate(time){
@@ -419,6 +403,27 @@ require(['../config'], function (config) {
 //             });
 //
 //         });
+
+
+        $('#upLoad').on('click', function (e) {
+            var form = $('#form1');//上传文件
+            var formdata = new FormData(form);
+            $.ajax({
+                type : "POST",
+                url : config.basePath + '/memo/file',
+                data : formdata,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success : function(msg) {
+                    if(msg){
+                        alert('提交成功！');
+                    }
+                }
+            });
+        });
+
         //第一层任务
         $('#btnNo').on('click', function (e) {
             var inPeo = $('#input_people').val();

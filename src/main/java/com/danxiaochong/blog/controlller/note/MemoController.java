@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,4 +51,11 @@ public class MemoController {
         ret.setData(list);
         return ret;
     }
-}
+    @ResponseBody
+    @RequestMapping(value = "file", method = { RequestMethod.POST })
+    public Map<String, Object> fileExcelInput(HttpServletRequest request, MultipartFile file) throws IOException {
+
+        return null;
+    }
+
+    }
