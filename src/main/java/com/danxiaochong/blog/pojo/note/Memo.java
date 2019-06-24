@@ -1,18 +1,23 @@
 package com.danxiaochong.blog.pojo.note;
 
-import java.util.Date;
-
 public class Memo {
     private int id;
-    private int memo_id;
-    private Date memo_start_time;
-    private  Date memo_end_time;
+    private String memo_end_time;
     private int priority;
     private String matter;
     private String memo_content;
     private String input_persion;
-    private Date input_time;
+    private String input_time;
     private int status;
+    private int remind;
+
+    public int getRemind() {
+        return remind;
+    }
+
+    public void setRemind(int remind) {
+        this.remind = remind;
+    }
 
     public int getId() {
         return id;
@@ -20,30 +25,6 @@ public class Memo {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getMemo_id() {
-        return memo_id;
-    }
-
-    public void setMemo_id(int memo_id) {
-        this.memo_id = memo_id;
-    }
-
-    public Date getMemo_start_time() {
-        return memo_start_time;
-    }
-
-    public void setMemo_start_time(Date memo_start_time) {
-        this.memo_start_time = memo_start_time;
-    }
-
-    public Date getMemo_end_time() {
-        return memo_end_time;
-    }
-
-    public void setMemo_end_time(Date memo_end_time) {
-        this.memo_end_time = memo_end_time;
     }
 
     public int getPriority() {
@@ -78,13 +59,6 @@ public class Memo {
         this.input_persion = input_persion;
     }
 
-    public Date getInput_time() {
-        return input_time;
-    }
-
-    public void setInput_time(Date input_time) {
-        this.input_time = input_time;
-    }
 
     public int getStatus() {
         return status;
@@ -92,5 +66,21 @@ public class Memo {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getMemo_end_time() {
+        return memo_end_time;
+    }
+
+    public void setMemo_end_time(String memo_end_time) {
+        this.memo_end_time = memo_end_time;
+    }
+
+    public String getInput_time() {
+        return input_time;
+    }
+
+    public void setInput_time(String input_time) {
+        this.input_time = input_time;
     }
 }

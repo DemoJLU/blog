@@ -2,21 +2,17 @@
 require(['../config'], function (config) {
     var user=window.parent.user;//记录登录用户
 
-
-
     initDatetimepicker();
     //初始化时间框
     function initDatetimepicker(){
         require(['datetimepicker'], function () {
-            $('#rpStartTime,#memo_end_time,#input_time,#rpStartTimeYes,#rpEndTimeYes,#memo_start_time,#upRpStartTime,#upRpEndTime').datetimepicker({
+            $('#memoDeadline,#deadline,#memoDeadlineModify').datetimepicker({
                 step: 1,
                 value:  '',
-                format: 'Y-m-d'
+                format: 'Y-m-d H:m:s'
             });
         });
     }
-
-
 
     //格式化输出时间
     function getMyDate(time){
@@ -42,36 +38,25 @@ require(['../config'], function (config) {
         }
         return num;
     }
+
+    //到期运算
+    function isTimeLimit(time,hourParam){
+        var date1=new Date();  //开始时间
+        date = time.substring(0,19);//截止时间字符串转时间
+        date = time.replace(/-/g,'/');
+        var date2 = new Date(date).getTime();
+        var date3 = date2 - date1.getTime(); //时间差的毫秒数
+        var leave = date3%(24*3600*1000)    //计算天数后剩余的毫秒数
+        var hours=Math.floor(leave/(3600*1000))
+        if (hours < hourParam){
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     require(['jquery', 'bootstrap', 'common/dt', 'common/slider','common/dateFormat'], function ($, bootstrap, dataTable) {
         $('#input_people').val(user.userName);  //设置录入人
-//         //加载matter下拉框
-//         $.ajax({
-//             url: config.basePath + '/dayShiftPlan/dropDownListMatter',
-//             type: 'get',
-//             data: null,
-//             //contentType: 'application/json',
-//             dataType: 'json',
-//             success: function (data) {
-//                 if(data){
-//                     var option='';
-// // 					var option2='<option value="'+404+'">'+无+'</option>';
-// // 					$("#matter_get").append(option2);
-//                     for(var i=0;i<data.length;i++){
-//                         option='<option value="'+data[i].matter_id+'">'+data[i].matter_name+'</option>';
-//                         $("#matter_get").append(option);
-//                         if(data[i].matter_id>200){
-//                             $("#matterYes").append(option);
-//                             $("#upMatterYes").append(option);
-//                             continue;
-//                         }else{
-//                             $("#matter").append(option);
-//                             $("#upMatter").append(option);
-//                             continue;
-//                         }
-//                     }
-//                 }
-//             }
-//         });
         //加载优先级下拉框
         // $.ajax({
         //     url: config.basePath + '/dayShiftPlan/dropDownListPriority',
@@ -96,11 +81,11 @@ require(['../config'], function (config) {
                 url: config.basePath + '/memo/list',
                 type: "POST",
                 data:function(d){
-                    d.memo_start_time=$('#memo_start_time').val();
-                    d.task_endtime=$('#memo_end_time').val();
-                    d.input_time=$('#input_time').val();
-                    d.matter_get=$('#matter_get').val();
+                    d.deadline=$('#deadline').val();
+                    d.matter=$('#matter').val();
                     d.done = $('#done').val();
+                    d.persion = $('#persion').val();
+                    d.priority = $('#priority').val();
                 }
             },
             columns: [
@@ -110,38 +95,65 @@ require(['../config'], function (config) {
                     }
                 },
                 { data: null,width:"5%"},
-                { data: 'memo_start_time',width:"10%",
-                    render: function (data){
-                        return data==null?"":data.split(" ")[0];
-                    }
-                },
-                { data: 'matter',width:"10%"},
+                { data: 'matter',width:"5%"},
                 { data: 'priority',width:"5%",
                     render: function (data){
                         if(data==1){
-                            data="必做";
+                            data="看心情";
                             return data;
                         }
                         if(data==2){
-                            data="优先";
+                            data="尽早完成";
                             return data;
                         }else{
-                            data="一般";
+                            data="紧急";
                             return data;
                         }
                     }
                 },
+                { data: 'memo_content',width:"25%"},
                 { data: 'memo_end_time',width:"10%",
+                    // render: function (data){
+                    //     return data==null?"":data.split(" ")[0];
+                    // }
+                },
+                { data: 'remind',width:"8%",
                     render: function (data){
-                        return data==null?"":data.split(" ")[0];
+                        if(data==1){
+                            data="1小时";
+                            return data;
+                        }
+                        if(data==2){
+                            data="2小时";
+                            return data;
+                        }
+                        if(data==6){
+                            data="6小时";
+                            return data;
+                        }
+                        if(data==12){
+                            data="12小时";
+                            return data;
+                        }
+                        if(data==24){
+                            data="24小时";
+                            return data;
+                        }
+                        if(data==168){
+                            data="一周";
+                            return data;
+                        }
+                        else{
+                            data="无提醒";
+                            return data;
+                        }
                     }
                 },
-                { data: 'memo_content',width:"25%"},
-                { data: 'input_persion',width:"10%"},
+                { data: 'input_persion',width:"7%"},
                 { data: 'input_time',width:"10%",
-                    render: function (data){
-                        return data==null?"":data.split(" ")[0];
-                    }
+                    // render: function (data){
+                    //     return data==null?"":data.split(" ")[0];
+                    // }
                 },
                 { data: null,width:"10%"},
             ],
@@ -153,7 +165,8 @@ require(['../config'], function (config) {
                 {
                     targets: 9,
                     render: function (data) {
-                        return '<a href="#repairModal" class="btn btn-info btn-xs" data-toggle="modal" title="修改" data-action="modify"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;'
+                        return '<a href="#doneModal" class="btn btn-success btn-xs" data-toggle="modal" title="完成"><span class="glyphicon glyphicon-ok"></span></a>&nbsp;&nbsp;&nbsp;'
+                            + '<a href="#repairModal" class="btn btn-info btn-xs" data-toggle="modal" title="修改" data-action="modify"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;&nbsp;&nbsp;'
                             + '<a href="#deleteModal" class="btn btn-danger btn-xs" data-toggle="modal" title="删除"> <span class="glyphicon glyphicon-remove"></span></a>';
                     }
                 }
@@ -161,6 +174,11 @@ require(['../config'], function (config) {
             ordering: true,
             serverSide: false,
             paginate: true,
+            "createdRow":function(row,data,index){
+                if (isTimeLimit(data.memo_end_time,data.remind)) {
+                    $('td',row).eq(3).css('backgroundColor' , '#FC9D99');
+                }
+            },
             drawCallback: function () {
                 var api = this.api();
                 //var startIndex = api.context[0]._iDisplayStart;//获取到本页开始的条数
@@ -179,77 +197,21 @@ require(['../config'], function (config) {
 
             }
         });
-        //添加计划第2层窗口 是
-        // $('#repairModalNew1').on('show.bs.modal', function (e) {
-        //     $("#train_numberYes").val("");
-        //     $("#command_contentYes").val("");
-        //     $("#task_cycleYes").val(1);
-        //     $("#fullTrainNum").text("");
-        // });
-        // //添加计划第2层窗口 否
-        // $('#repairModalNew2').on('show.bs.modal', function (e) {
-        //     $("#command_content").val("");
-        // });
-        //车次框焦点消失
-        // $("#train_numberYes").blur(function(){
-        //     var inputNum= document.getElementById("train_numberYes").value.toUpperCase();;
-        //     var name="请核对车次";
-        //     var value=1;
-        //     if(trainNumList!=null){
-        //         for(var i=0;i<trainNumList.length;i++){
-        //             if(isTrainNum(trainNumList[i].name,inputNum)){
-        //                 name=trainNumList[i].name;
-        //                 value=trainNumList[i].value;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        //     $("#fullTrainNum").text(name);
-        //     $("#task_cycleYes").val(value);
-        // })
-        // $("#upTrain_number").blur(function(){
-        //     var inputNum= document.getElementById("upTrain_number").value.toUpperCase();;
-        //     var name="请核对车次";
-        //     var value=1;
-        //     if(trainNumList!=null){
-        //         for(var i=0;i<trainNumList.length;i++){
-        //             if(isTrainNum(trainNumList[i].name,inputNum)){
-        //                 name=trainNumList[i].name;
-        //                 value=trainNumList[i].value;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        //     $("#upFullTrainNum").text(name);
-        //     $("#upTask_cycle").val(value);
-        // })
 
-        //修改任务信息
+
+        //修改备忘信息
         $('#repairModal').on('show.bs.modal', function (e) {
             var rowData = dayShiftPlan.row($(e.relatedTarget).parent()).data();
-            $('#upTaskId').val(rowData.task_id);
-            $('#upDepotDispatch').val(rowData.depot_dispatch);
-            if(rowData.depot_dispatch==0){
-                $("#upPriorityYes,#upRpEndTime,#upTrain_number").attr("disabled",true);
-                $('#upMatterYes').hide();
-                $('#upMatter').show();
-                $('#upMatter').val(rowData.matter);
-            }else{
-                $("#upPriorityYes,#upRpEndTime,#upTrain_number").attr("disabled",false);
-                $('#upMatterYes').show();
-                $('#upMatterYes').val(rowData.matter);
-                $('#upMatter').hide();
-            }
-            $('#upTrain_number').val(rowData.train_number);
-            $('#upRpStartTime').val(rowData.memo_start_time.split(" ")[0]);
-            $('#upRpEndTime').val(rowData.task_expire==null?"":rowData.task_expire.split(" ")[0]);
-            $('#upDayNightType').val(rowData.dayNight_type);
-            $('#upCommand_content').val(rowData.command_content);
-            $('#upPriorityYes').val(rowData.priority);
-            $('#upTask_cycle').val(rowData.task_cycle);
-            $("#upFullTrainNum").text("");
+            $('#memoIdModify').val(rowData.id);
+            $('#inputPersionModify').val(rowData.input_persion);
+            $('#memoTypeModify').val(rowData.matter);
+            $('#memoRankModify').val(rowData.priority);
+            $('#memoDeadlineModify').val(rowData.memo_end_time);
+            $('#memoContentModify').val(rowData.memo_content);
+            $('#remindModify').val(rowData.remind);
+            // $("#upFullTrainNum").text("");
         });
-        //保存修改的任务信息
+        //保存修改的备忘信息
         $('#btnUpdateSave').on('click', function (e) {
             var params = {};
             //必填项验证
@@ -264,36 +226,24 @@ require(['../config'], function (config) {
                 $(e).parent().addClass('has-error');
                 return;
             }
-            var rpStartTime=document.getElementById('upRpStartTime').value;
-            var priority=document.getElementById('upPriorityYes').value;
-            var memo_end_time=document.getElementById('upRpEndTime').value;
-            var command_content=document.getElementById('upCommand_content').value;
-            var train_number=document.getElementById('upTrain_number').value;
-            var depotDispatch=document.getElementById('upDepotDispatch').value;
-            var task_cycle=document.getElementById('upTask_cycle').value;
-            var matter;
-            if(depotDispatch==1){
-                matter=document.getElementById('upMatterYes').value;
-            }else{
-                matter=document.getElementById('upMatter').value;
-            }
-            var dayNightType=document.getElementById('upDayNightType').value;
-            var taskId=document.getElementById('upTaskId').value;
+            var remindModify=document.getElementById('remindModify').value;
+            var inputPersionModify=document.getElementById('inputPersionModify').value;
+            var memoTypeModify=document.getElementById('memoTypeModify').value;
+            var memoRankModify=document.getElementById('memoRankModify').value;
+            var memoDeadlineModify=document.getElementById('memoDeadlineModify').value;
+            var memoContentModify=document.getElementById('memoContentModify').value;
+            var memoIdModify=document.getElementById('memoIdModify').value;
             params ={
-                rpStartTime:rpStartTime,
-                priority:priority,
-                memo_end_time:memo_end_time,
-                command_content:command_content,
-                train_number:train_number,
-                matter:matter,
-                dayNightType:dayNightType,
-                taskId:taskId,
-                updateUser:user.userName,
-                task_cycle:task_cycle,
-                departmentId:user.departmentId
+                remindModify:remindModify,
+                inputPersionModify:inputPersionModify,
+                memoTypeModify:memoTypeModify,
+                memoRankModify:memoRankModify,
+                memoDeadlineModify:memoDeadlineModify,
+                memoContentModify:memoContentModify,
+                memoIdModify:memoIdModify,
             };
-            $.post(config.basePath + '/todayTask/updateImportTaskInfo', params, function (data) {
-                if (data === 'success') {
+            $.post(config.basePath + '/memo/modifyMemo', params, function (data) {
+                if (data === 1) {
                     $('#updateconfirmModal').modal('show');
                     $('#repairModal').modal('hide');
                     dayShiftPlan.ajax.reload();
@@ -302,127 +252,75 @@ require(['../config'], function (config) {
                 }
             });
         });
-        //第二层否的确定
-//         $('#btn_save').on('click', function (e) {
-// //        	alert($('#input_persion').val());
-//             var depot_dispatch = "否";
-//             var input_user = $('#input_user').val();
-//             var params = {};
-//             //必填项验证
-//             $('#repairModalNew2 .form-group').removeClass('has-error');
-//             try {
-//                 $('#repairModalNew2').find('.form-control').each(function (i, dom) {
-//                     if (dom.required && !dom.value) {
-//                         throw dom;
-//                     }
-//                 });
-//             } catch (e) {
-//                 $(e).parent().addClass('has-error');
-//                 // var input_persion=document.getElementById('input_persion').value;
-//                 //if(input_persion==''){
-//                 return;
-//                 //}
-//             }
-//             var rpStartTime=document.getElementById('rpStartTime').value;
-//             var command_content=document.getElementById('command_content').value;
-//             var matter=document.getElementById('matter').value;
-//             params ={
-//                 rpStartTime:rpStartTime,
-//                 command_content:command_content,
-//                 depot_dispatch:depot_dispatch,
-//                 input_user:input_user,
-//                 priority:1,
-//                 matter:matter,
-//                 departmentId:user.departmentId
-//             };
-//             $.post(config.basePath + '/dayShiftPlan/addTaskInfo', params, function (data) {
-//                 if (data === 'success') {
-//                     $('#addconfirmModal').modal('show');
-//                     $('#repairModalNew2').modal('hide');
-//                     $('#addPlanOne').modal('hide');
-//                     dayShiftPlan.ajax.reload();
-//                     // window.location.reload();
-//                 } else {
-//                     alert('新增任务信息失败！请检查您输入的车号、车次及回段日期是否正确！');
-//                 }
-//             });
-//
-//         });
-        //第二层是的确定
-//         $('#btnSaveYes').on('click', function (e) {
-// //        	alert($('#input_persion').val());
-//             var depot_dispatch = "是";
-//             var input_user = $('#input_user').val();
-//             var params = {};
-//             //必填项验证
-//             $('#repairModalNew1 .form-group').removeClass('has-error');
-//             try {
-//                 $('#repairModalNew1').find('.form-control').each(function (i, dom) {
-//                     if (dom.required && !dom.value) {
-//                         throw dom;
-//                     }
-//                 });
-//             } catch (e) {
-//                 $(e).parent().addClass('has-error');
-//                 // var input_persion=document.getElementById('input_persion').value;
-//                 //if(input_persion==''){
-//                 return;
-//                 //}
-//             }
-//             var rpStartTime=document.getElementById('rpStartTimeYes').value;
-//             var priority=document.getElementById('priorityYes').value;
-//             var rpEndTime=document.getElementById('rpEndTimeYes').value;
-//             var command_content=document.getElementById('command_contentYes').value;
-//             var train_number=document.getElementById('train_numberYes').value;
-//             var matter=document.getElementById('matterYes').value;
-//             var dayNight_type=document.getElementById('dayNightTypeYes').value;
-//             var task_cycle=document.getElementById('task_cycleYes').value;
-//             params ={
-//                 rpStartTime:rpStartTime,
-//                 priority:priority,
-//                 rpEndTime:rpEndTime,
-//                 command_content:command_content,
-//                 train_number:train_number,
-//                 matter:matter,
-//                 dayNight_type:dayNight_type,
-//                 depot_dispatch:depot_dispatch,
-//                 input_user:input_user,
-//                 task_cycle:task_cycle,
-//                 departmentId:user.departmentId
-//             };
-//             $.post(config.basePath + '/dayShiftPlan/addTaskInfo', params, function (data) {
-//                 if (data === 'success') {
-//                     $('#addconfirmModal').modal('show');
-//                     $('#repairModalNew1').modal('hide');
-//                     $('#addPlanOne').modal('hide');
-//                     dayShiftPlan.ajax.reload();
-//                     // window.location.reload();
-//                 } else {
-//                     alert('新增任务信息失败！请检查您输入的车号、车次及回段日期是否正确！');
-//                 }
-//             });
-//
-//         });
 
-
-        $('#upLoad').on('click', function (e) {
-            var form = $('#form1');//上传文件
-            var formdata = new FormData(form);
-            $.ajax({
-                type : "POST",
-                url : config.basePath + '/memo/file',
-                data : formdata,
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success : function(msg) {
-                    if(msg){
-                        alert('提交成功！');
+        //新增备忘
+        $('#btnSave').on('click', function (e) {
+//        	alert($('#input_persion').val());
+            var depot_dispatch = "是";
+            var input_user = $('#input_user').val();
+            var params = {};
+            //必填项验证
+            $('#repairModalLabel .form-group').removeClass('has-error');
+            try {
+                $('#repairModalLabel').find('.form-control').each(function (i, dom) {
+                    if (dom.required && !dom.value) {
+                        throw dom;
                     }
+                });
+            } catch (e) {
+                $(e).parent().addClass('has-error');
+                // var input_persion=document.getElementById('input_persion').value;
+                //if(input_persion==''){
+                return;
+                //}
+            }
+            var remind=document.getElementById('remind').value;
+            var inputPersion=document.getElementById('inputPersion').value;
+            var memoType=document.getElementById('memoType').value;
+            var memoRank=document.getElementById('memoRank').value;
+            var memoDeadline=document.getElementById('memoDeadline').value;
+            var memoContent=document.getElementById('memoContent').value;
+            params ={
+                remind:remind,
+                inputPersion:inputPersion,
+                memoType:memoType,
+                memoRank:memoRank,
+                memoDeadline:memoDeadline,
+                memoContent:memoContent,
+            };
+            $.post(config.basePath + '/memo/addMemo', params, function (data) {
+                if (data === 1) {
+                    $('#addconfirmModal').modal('show');
+                    $('#repairModalNew1').modal('hide');
+                    $('#addPlanOne').modal('hide');
+                    dayShiftPlan.ajax.reload();
+                    // window.location.reload();
+                } else {
+                    alert('新增任务信息失败!');
                 }
             });
+
         });
+
+
+        // $('#upLoad').on('click', function (e) {
+        //     var form = $('#form1');//上传文件
+        //     var formdata = new FormData(form);
+        //     $.ajax({
+        //         type : "POST",
+        //         url : config.basePath + '/memo/file',
+        //         data : formdata,
+        //         async: false,
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false,
+        //         success : function(msg) {
+        //             if(msg){
+        //                 alert('提交成功！');
+        //             }
+        //         }
+        //     });
+        // });
 
         //第一层任务
         $('#btnNo').on('click', function (e) {
@@ -469,18 +367,33 @@ require(['../config'], function (config) {
             $("#repairModalNew1").modal('show');
 
         });
+        //显示完成modal
+        $('#doneModal').on('show.bs.modal', function (e) {
+            var rowData = dayShiftPlan.row($(e.relatedTarget).parent()).data();
+            $('#doneId').val(rowData.id);
+        });
+        $('#btnDone').on('click', function (e) {
+            $.get(config.basePath + '/memo/doneMemo', {memoId: $('#doneId').val()}, function (data) {
+                if (data === 1) {
+                    dayShiftPlan.ajax.reload();
+                    $('#doneModal').modal('hide');
+                } else {
+                    alert('操作失败！');
+                }
+            })
+        });
         //显示删除modal
         $('#deleteModal').on('show.bs.modal', function (e) {
             var rowData = dayShiftPlan.row($(e.relatedTarget).parent()).data();
-            $('#taskId').val(rowData.task_id);
+            $('#memoId').val(rowData.id);
         });
         $('#btnDelete').on('click', function (e) {
-            $.get(config.basePath + '/dayShiftPlan/deleteTaskInfo', {taskId: $('#taskId').val()}, function (data) {
-                if (data === 'success') {
+            $.get(config.basePath + '/memo/deleteMemo', {memoId: $('#memoId').val()}, function (data) {
+                if (data === 1) {
                     dayShiftPlan.ajax.reload();
                     $('#deleteModal').modal('hide');
                 } else {
-                    alert('删除任务信息失败！');
+                    alert('删除备忘信息失败！');
                 }
             })
         });
@@ -592,27 +505,19 @@ require(['../config'], function (config) {
         $('#btnReset, #btnRefresh').on('click', function (e) {
             ResetTd();
             //dayShiftPlan.settings()[0].ajax.data ={};
-            $('#vehInfoTable').hide();
-            $('#rpStartTime,#rpStartTimeYes,#rpEndTimeYes, #memo_end_time,#memo_start_time,#rpEndTimeYes').datetimepicker({
-                step: 1,
-                value:  '',
-                format: 'Y-m-d'
-            });
-            dayShiftPlan.ajax.reload();
-            getExpireNoticeDetail();
+            // $('#vehInfoTable').hide();
+            // $('#rpStartTime,#rpStartTimeYes,#rpEndTimeYes, #memo_end_time,#memo_start_time,#rpEndTimeYes').datetimepicker({
+            //     step: 1,
+            //     value:  '',
+            //     format: 'Y-m-d'
+            // });
+            // dayShiftPlan.ajax.reload();
+            // getExpireNoticeDetail();
         });
         //清空td中的内容
         function ResetTd(){
-            $('#memo_start_time').val('');
-            $('#memo_end_time').val('');
-            $('#vehicle_id').val('');
-            $('#veh_specie').html("");
-            $('#train_num').html("");
-            $('#veh_id').html("");
-            $('#fixed_number').html("");
-            $('#wind_supply_form').html("");
-            $('#main_line_volt').html("");
-            $('#hook_type').html("");
+            $('#persion').val('');
+            $('#deadline').val('');
 //      	 $('#matter_get').html("");
         }
 

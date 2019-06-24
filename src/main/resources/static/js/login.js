@@ -43,11 +43,10 @@ require(['config'], function (config) {
                         if(msg == "1"){
                             self.showError("成功");
                             window.location.href = "./pages/index.html";
+                        }else{
+                            self.showError("登录异常，请检查数据库");
                         }
                     },
-        			error: function(msg){
-                        self.showError("登录异常，请检查数据库");
-        			}
                 });
             }
         }

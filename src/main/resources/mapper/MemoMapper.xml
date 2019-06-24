@@ -3,23 +3,49 @@
 <mapper namespace="com.danxiaochong.blog.mapper.note.MemoMapper">
 
     <select id="getMemoList" parameterType="Map" resultType="com.danxiaochong.blog.pojo.note.Memo">
-        select p.id,p.memo_id,date_format(p.memo_start_time, '%Y-%m-%d') as memo_start_time,date_format(p.memo_end_time, '%Y-%m-%d') as memo_end_time,p.priority,p.matter,p.memo_content,p.input_persion,date_format(p.input_time, '%Y-%m-%d') as input_time ,
-        p.status
+        select p.id,date_format(p.memo_end_time, '%Y-%m-%d %H:%i:%s') as memo_end_time,p.priority,p.matter,p.memo_content,
+        p.input_persion,date_format(p.input_time, '%Y-%m-%d %H:%i:%s') as input_time ,p.status,p.remind
         from tbl_memo p
-        where p.status = 0
-        <if test='memo_start_time!="" and memo_start_time!=null'>
-            AND p.memo_start_time >= #{memo_start_time}
+        where 1=1
+        <if test='done!="" and done!=null'>
+            AND p.status = #{done}
         </if>
-        <if test='memo_end_time!="" and memo_end_time!=null'>
-            AND p.memo_end_time  &lt;= #{memo_end_time}
+        <if test='deadline!=null'>
+            AND p.memo_end_time  &lt;= #{deadline}
         </if>
-        <if test='input_time!="" and input_time!=null'>
-            AND p.input_time =#{input_time}
+        <if test='persion!="" and persion!=null'>
+            AND p.input_persion = #{persion}
         </if>
         <if test='matter!="" and matter!=null'>
-            AND p.matter =#{matter}
+            AND p.matter = #{matter}
         </if>
-        ORDER BY p.memo_start_time ASC,p.PRIORITY DESC
+        <if test='priority!="" and priority!=null'>
+            AND p.priority = #{priority}
+        </if>
+        order by p.priority desc
     </select>
+
+    <insert id="addMemo" parameterType="Map">
+        insert into tbl_memo (memo_end_time,priority,matter,memo_content,input_persion,input_time,remind)
+        VALUES (#{memoDeadline},#{memoRank},#{memoType},#{memoContent},#{inputPersion},#{inputTime},#{remind})
+    </insert>
+
+<!--    <delete id="deleteMemo" parameterType="Integer">-->
+<!--        delete from tbl_memo where id = #{memoId}-->
+<!--    </delete>-->
+
+    <update id="deleteMemo" parameterType="Integer">
+        update tbl_memo set status = 0 where id = #{memoId}
+    </update>
+
+    <update id="doneMemo" parameterType="Integer">
+        update tbl_memo set status = 2 where id = #{memoId}
+    </update>
+
+    <update id="modifyMemo">
+        update tbl_memo set memo_end_time = STR_TO_DATE(#{memoDeadlineModify},'%Y-%m-%d %H:%i:%s'),priority = #{memoRankModify},
+        matter = #{memoTypeModify},memo_content = #{memoContentModify},input_persion = #{inputPersionModify},remind = #{remindModify}
+        where id = #{memoIdModify}
+    </update>
 
 </mapper>

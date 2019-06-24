@@ -36,49 +36,44 @@
                 </h3>
                 <form>
                     <div class="form-group">
-                        <label for="memo_start_time" class="control-label">开始时间：</label>
-                        <input class="form-control" id="memo_start_time">
+                        <label for="deadline" class="control-label">最后期限：</label>
+                        <input class="form-control" id="deadline">
                     </div>
                     <div class="form-group">
-                        <label for="memo_end_time" class="control-label">结束时间：</label>
-                        <input class="form-control" id="memo_end_time">
-                    </div>
-                    <div class="form-group">
-                        <label for="input_time" class="control-label">录入时间：</label>
-                        <input class="form-control" id="input_time">
+                        <label for="persion" class="control-label">录入人：</label>
+                        <input class="form-control" id="persion">
                     </div>
                     <div class=" form-group">
-                        <label for="matter" class="control-label">事项：</label>
+                        <label for="priority" class="control-label">优先级：</label>
+                        <select class="form-control" id="priority">
+                            <option value="">全部</option>
+                            <option value="1">看心情</option>
+                            <option value="2">尽早完成</option>
+                            <option value="3">紧急</option>
+                        </select>
+                    </div>
+                    <div class=" form-group">
+                        <label for="matter" class="control-label">类别：</label>
                         <select class="form-control" id="matter">
-                            <option value="0">工作</option>
-                            <option value="1">生活</option>
-                            <option value="2">全部</option>
+                            <option value="">全部</option>
+                            <option value="工作">工作</option>
+                            <option value="学习">学习</option>
+                            <option value="生活">生活</option>
+                            <option value="其他">其他</option>
                         </select>
                     </div>
                     <div class=" form-group">
                         <label for="done" class="control-label">完成状态：</label>
                         <select class="form-control" id="done">
-                            <option value="0">未完成</option>
-                            <option value="1">已完成</option>
-                            <option value="2">全部</option>
+                            <option value="1">未完成</option>
+                            <option value="2">已完成</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <button type="button" id="btnQuery" class="btn btn-success form-control">查询</button>
                     </div>
                     <div class="form-group">
-                        <button type="button" id="btnQueryToday" class="btn btn-success form-control">今日备忘</button>
-                    </div>
-                    <div class="form-group">
                         <button type="button" id="btnReset" class="btn btn-warning form-control">重置</button>
-                    </div>
-                    <div class="form-group">
-                        <form enctype="multipart/form-data" method="post" name="form1">
-                            <label>File to stash:</label>
-                            <input type="file" name="file" required />
-                            <button type="button" id="upLoad" class="btn btn-warning form-control">上传</button>
-                            <!--<input type="submit" value="Stash the file!" />-->
-                        </form>
                     </div>
                 </form>
                 <table  id="vehInfoTable" border="1" style="display: none" width="200px" height="160px" align="center" cellspacing="0" cellpadding="5">
@@ -94,23 +89,23 @@
             <dl class="warning-content">
                 <dt>
                     <h3 class="content-title"><span class="glyphicon glyphicon-menu-hamburger search-show"></span> 备忘信息</h3>
-                    <div id="noticeDetailAlert" class="alert alert-info"  style="position: absolute;left: 25%;top: 8px;width: 50%;height: 50px;padding-top:5px;overflow: hidden;z-index: 999">
-                        <a href="#" class="close"  style="color: grey">
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                            <span class="glyphicon glyphicon-chevron-up" style="display: none"></span>
-                        </a>
-                        <p style="width:20%;float: left;font-weight: bold;"> <span id="noticeDetailSize"></span> 条备忘将到期：</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-                        <div id="scrollBox" style="width:80%;overflow: hidden;">
-                            <ul >
-                            </ul>
-                        </div>
-                    </div>
+<!--                    <div id="noticeDetailAlert" class="alert alert-info"  style="position: absolute;left: 25%;top: 8px;width: 50%;height: 50px;padding-top:5px;overflow: hidden;z-index: 999">-->
+<!--                        <a href="#" class="close"  style="color: grey">-->
+<!--                            <span class="glyphicon glyphicon-chevron-down"></span>-->
+<!--                            <span class="glyphicon glyphicon-chevron-up" style="display: none"></span>-->
+<!--                        </a>-->
+<!--                        <p style="width:20%;float: left;font-weight: bold;"> <span id="noticeDetailSize"></span> 条备忘将到期：</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 -->
+<!--                        <div id="scrollBox" style="width:80%;overflow: hidden;">-->
+<!--                            <ul >-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="pull-right">
                         <!--  <button type="button" id="btnAdd" class="btn btn-success" data-toggle="modal" data-target="#repairModal" data-action="add" style="width: 100px; margin: 15px 5px 10px 0;">新增任务</button> -->
                         <button type="button" id="btnAdd" class="btn btn-success" data-toggle="modal" data-target="#addPlanOne" data-action="add" style="width: 100px; margin: 15px 5px 10px 0;">新增备忘</button>
-                        <button id="btnExport" type="button" class="btn btn-info pull-right btn-range"  style="width: 100px; margin: 15px 5px 10px 10px;">
-                            选择删除
-                        </button>
+<!--                        <button id="btnExport" type="button" class="btn btn-info pull-right btn-range"  style="width: 100px; margin: 15px 5px 10px 10px;">-->
+<!--                            选择删除-->
+<!--                        </button>-->
                         <button id="btnExportOk" type="button" class="btn btn-success pull-right btn-range"  style="width: 100px; margin: 15px 5px 10px 10px;display:none;">
                             确认删除
                         </button>
@@ -123,11 +118,11 @@
                         <tr style="background-color: #DFE2E6; color: #333333">
                             <th><input type="checkbox" class="checkall"/></th>
                             <th>序号</th>
-                            <th>时间</th>
                             <th>类别</th>
                             <th>等级</th>
-                            <th>最后期限</th>
                             <th>内容</th>
+                            <th>最后期限</th>
+                            <th>提醒时间</th>
                             <th>录入人</th>
                             <th>录入时间</th>
                             <th>操作</th>
@@ -152,187 +147,113 @@
             </div>
             <div class="modal-body">
                 <form class="inline-block">
-                    <div class="col-sm-5 form-group col-sm-offset-2">
-                        <label for="input_people" class="control-label"><span style="color:red">*</span>录入人：</label>
-                        <input id="input_people" class="form-control" required>
+                    <div class="col-sm-4 form-group ">
+                        <label for="inputPersion" class="control-label"><span style="color:red">*</span>录入人：</label>
+                        <input id="inputPersion" class="form-control" required>
                     </div>
-                    <!--       <div class="col-sm-4 form-group" >
-                                <label for="rpStartTime" class="control-label"><span style="color:red">*</span>录入时间：</label>
-                                <input class="form-control" id="rpStartTime" required>
-                            </div>   -->
-                    <div class="col-sm-5 form-group">
-                        <label for="dayNightType" class="control-label"><span style="color:red">*</span>是否涉及库内调车：</label>
-                        <button type="button" id="btnYes" class="btn btn-success"  data-action="add" style="width: 70px; ">是</button>&nbsp;&nbsp;
-                        <button type="button" id="btnNo" class="btn btn-success"  data-action="add" style="width: 70px; ">否</button>
+                    <div class="col-sm-4 form-group">
+                        <label for="memoType" class="control-label"><span style="color:red">*</span>类别：</label>
+                        <select class="form-control" id="memoType" required  >
+                            <option value="工作">工作</option>
+                            <option value="学习">学习</option>
+                            <option value="生活">生活</option>
+                            <option value="其他">其他</option>
+                        </select>
                     </div>
-                    <input id="taskId" class="form-control" type="hidden" />
+                    <div class="col-sm-4 form-group">
+                        <label for="memoRank" class="control-label"><span style="color:red">*</span>等级：</label>
+                        <select class="form-control" id="memoRank" required  >
+                            <option value="1">看心情</option>
+                            <option value="2">尽早完成</option>
+                            <option value="3">紧急</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="memoDeadline" class="control-label"><span style="color:red">*</span>最后期限：</label>
+                        <input id="memoDeadline" class="form-control" required>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label for="remind" class="control-label"><span style="color:red">*</span>提醒时间：</label>
+                        <select class="form-control" id="remind" required  >
+                            <option value="1">1小时</option>
+                            <option value="2">2小时</option>
+                            <option value="6">6小时</option>
+                            <option value="12">12小时</option>
+                            <option value="24">24小时</option>
+                            <option value="168">一周</option>
+                            <option value="0">无提醒</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 form-group" >
+                        <span id="fullTrainNum" style="position: absolute;left:3%;top:-3px;color: blue"></span>
+                        <label for="memoContent" class="control-label" style="margin-top:20px;"><span style="color:red">*</span>内容：</label>
+                        <textarea id="memoContent" class="form-control" rows="6" style="margin: 0px; width: 100%; height: 66px;" required></textarea>
+                    </div>
+                    <input id="memoId" class="form-control" type="hidden" />
                 </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="btnSave" type="button" class="btn btn-primary">确定</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!--&lt;!&ndash; 新的第二层调车框 是 &ndash;&gt;-->
-<!--<div class="modal fade" id="repairModalNew1" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">-->
-    <!--<div class="modal-dialog" role="document" style="width: 800px;">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-                    <!--&times;-->
-                <!--</button>-->
-                <!--<h4 class="modal-title" id="repairModalLabel">库内调车任务信息</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--<form class="inline-block">-->
-                    <!--<div class="col-sm-4 form-group">-->
-                        <!--<label for="rpStartTime" class="control-label"><span style="color:red">*</span>一事一令下达时间：</label>-->
-                        <!--<input class="form-control" id="rpStartTimeYes" required>-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-4 form-group">-->
-                        <!--<label for="dayNightType" class="control-label"><span style="color:red">*</span>白夜班：</label>-->
-                        <!--<select class="form-control" id="dayNightTypeYes" required  >-->
-                            <!--<option value="1">当日夜班</option>-->
-                            <!--<option value="0">次日白班</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-4 form-group">-->
-                        <!--<label for="matter" class="control-label">事项：</label>-->
-                        <!--<select class="form-control" id="matterYes" required  >-->
-                        <!--</select>-->
-                    <!--</div>-->
-
-                    <!--<div class="col-sm-2 form-group">-->
-                        <!--<label for="train_number" class="control-label"><span style="color:red">*</span>车次：</label>-->
-                        <!--<input id="train_numberYes" class="form-control" required>-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-2 form-group">-->
-                        <!--<label for="task_cycleYes" class="control-label"><span style="color:red">*</span>周期：</label>-->
-                        <!--<select class="form-control" id="task_cycleYes" required  >-->
-                            <!--<option value="1">1天</option>-->
-                            <!--<option value="2">2天</option>-->
-                            <!--<option value="3">3天</option>-->
-                            <!--<option value="4">4天</option>-->
-                            <!--<option value="5">5天</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-4 form-group">-->
-                        <!--<label for="priority" class="control-label"><span style="color:red">*</span>优先级：</label>-->
-                        <!--<select class="form-control" id="priorityYes" required  >-->
-                        <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-4 form-group">-->
-                        <!--<label for="rpEndTime" class="control-label">最后期限：</label>-->
-                        <!--<input id="rpEndTimeYes" class="form-control" >-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-12 form-group" >-->
-                        <!--<span id="fullTrainNum" style="position: absolute;left:3%;top:-3px;color: blue"></span>-->
-                        <!--<label for="command_content" class="control-label" style="margin-top:20px;"><span style="color:red">*</span>内容：</label>-->
-                        <!--<textarea id="command_contentYes" class="form-control" rows="3" style="margin: 0px; width: 100%; height: 66px;" required></textarea>-->
-                    <!--</div>-->
-                    <!--<input id="input_user"  type="hidden" />-->
-                <!--</form>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-                <!--<button id="btnSaveYes" type="button" class="btn btn-primary">确定</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; 新的第二层调车框 否&ndash;&gt;-->
-<!--<div class="modal fade" id="repairModalNew2" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">-->
-    <!--<div class="modal-dialog" role="document" style="width: 800px;">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-                    <!--&times;-->
-                <!--</button>-->
-                <!--<h4 class="modal-title" id="repairModalLabel">非库内调车任务信息</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--<form class="inline-block">-->
-                    <!--<div class="col-sm-4 form-group">-->
-                        <!--<label for="rpStartTime" class="control-label"><span style="color:red">*</span>一事一令下达时间：</label>-->
-                        <!--<input class="form-control" id="rpStartTime" required>-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-4 form-group">-->
-                        <!--<label for="matter" class="control-label">事项：</label>-->
-                        <!--<select class="form-control" id="matter" required  >-->
-                        <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-8 form-group">-->
-                        <!--<label for="command_content" class="control-label" style="margin-top:-20px;"><span style="color:red">*</span>内容：</label>-->
-                        <!--<textarea id="command_content" class="form-control" rows="3" style="margin: 0px; width: 500px; height: 66px;" required></textarea>-->
-                    <!--</div>-->
-                    <!--<input id="input_user"  type="hidden" />-->
-                <!--</form>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-                <!--<button id="btn_save" type="button" class="btn btn-primary">确定</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 <!-- RepairModal -->
-<div class="modal fade" id="repairModal" tabindex="-1" role="dialog" aria-labelledby="repairModalLabel">
+<div class="modal fade" id="repairModal" tabindex="-1" role="dialog" aria-labelledby="repairModalModify">
     <div class="modal-dialog" role="document" style="width: 800px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     &times;
                 </button>
-                <h4 class="modal-title" id="repairModalLabel">修改计划信息</h4>
+                <h4 class="modal-title" id="repairModalModify">修改计划信息</h4>
             </div>
             <div class="modal-body">
                 <form class="inline-block">
-                    <div class="col-sm-4 form-group">
-                        <label for="upRpStartTime" class="control-label"><span style="color:red">*</span>开始时间：</label>
-                        <input class="form-control" id="upRpStartTime" required>
+                    <div class="col-sm-4 form-group ">
+                        <label for="inputPersionModify" class="control-label"><span style="color:red">*</span>录入人：</label>
+                        <input id="inputPersionModify" class="form-control" required>
                     </div>
                     <div class="col-sm-4 form-group">
-                        <label for="upDayNightType" class="control-label"><span style="color:red">*</span>白夜班：</label>
-                        <select class="form-control" id="upDayNightType" required  >
-                            <option value="0">次日白班</option>
-                            <option value="1">当日夜班</option>
+                        <label for="memoTypeModify" class="control-label"><span style="color:red">*</span>类别：</label>
+                        <select class="form-control" id="memoTypeModify" required  >
+                            <option value="工作">工作</option>
+                            <option value="学习">学习</option>
+                            <option value="生活">生活</option>
+                            <option value="其他">其他</option>
                         </select>
                     </div>
                     <div class="col-sm-4 form-group">
-                        <label for="upMatter" class="control-label"><span style="color:red">*</span>事项：</label>
-                        <select class="form-control" id="upMatterYes" required style="display: none" >
-                        </select>
-                        <select class="form-control" id="upMatter" required style="display: none" >
-                        </select>
-                    </div>
-                    <div class="col-sm-2 form-group">
-                        <label for="upTrain_number" class="control-label">车次：</label>
-                        <input id="upTrain_number" class="form-control">
-                    </div>
-                    <div class="col-sm-2 form-group">
-                        <label for="upTask_cycle" class="control-label">周期：</label>
-                        <select class="form-control" id="upTask_cycle" required  >
-                            <option value="1">1天</option>
-                            <option value="2">2天</option>
-                            <option value="3">3天</option>
-                            <option value="4">4天</option>
-                            <option value="5">5天</option>
+                        <label for="memoRankModify" class="control-label"><span style="color:red">*</span>等级：</label>
+                        <select class="form-control" id="memoRankModify" required  >
+                            <option value="1">看心情</option>
+                            <option value="2">尽早完成</option>
+                            <option value="3">紧急</option>
                         </select>
                     </div>
                     <div class="col-sm-4 form-group">
-                        <label for="upPriority" class="control-label"><span style="color:red">*</span>优先级：</label>
-                        <select class="form-control" id="upPriorityYes" required  >
-                        </select>
+                        <label for="memoDeadlineModify" class="control-label"><span style="color:red">*</span>最后期限：</label>
+                        <input id="memoDeadlineModify" class="form-control" required>
                     </div>
                     <div class="col-sm-4 form-group">
-                        <label for="upRpEndTime" class="control-label">到期时间：</label>
-                        <input id="upRpEndTime" class="form-control" >
+                        <label for="remindModify" class="control-label"><span style="color:red">*</span>提醒时间：</label>
+                        <select class="form-control" id="remindModify" required  >
+                            <option value="1">1小时</option>
+                            <option value="2">2小时</option>
+                            <option value="6">6小时</option>
+                            <option value="12">12小时</option>
+                            <option value="24">24小时</option>
+                            <option value="168">一周</option>
+                            <option value="0">无提醒</option>
+                        </select>
                     </div>
-                    <div class="col-sm-12 form-group">
-                        <span id="upFullTrainNum" style="position: absolute;left:3%;top:-3px;color: blue"></span>
-                        <label for="upCommand_content" class="control-label" style="margin-top:20px;"><span style="color:red">*</span>内容：</label>
-                        <textarea id="upCommand_content" class="form-control" rows="3" style="margin: 0px; width: 100%; height: 66px;" required></textarea>
+                    <div class="col-sm-12 form-group" >
+                        <span id="fullTrainNumModify" style="position: absolute;left:3%;top:-3px;color: blue"></span>
+                        <label for="memoContentModify" class="control-label" style="margin-top:20px;"><span style="color:red">*</span>内容：</label>
+                        <textarea id="memoContentModify" class="form-control" rows="6" style="margin: 0px; width: 100%; height: 66px;" required></textarea>
                     </div>
-                    <input id="upTaskId" class="form-control" type="hidden" />
-                    <input id="upDepotDispatch" class="form-control" type="hidden" />
+                    <input id="memoIdModify" class="form-control" type="hidden" />
                 </form>
             </div>
             <div class="modal-footer">
@@ -393,6 +314,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button id="btnDelete" type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirmDoneModal -->
+<div class="modal fade" id="doneModal" tabindex="-1" role="dialog" aria-labelledby="doneModalLabel">
+    <div class="modal-dialog modal-sm" style="width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h4 class="modal-title" id="doneModalLabel">确认提示</h4>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-danger" style="font-weight: bold;">确定已完成吗？</h4>
+                <input type="hidden" id="doneId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="btnDone" type="button" class="btn btn-primary">确定</button>
             </div>
         </div>
     </div>
