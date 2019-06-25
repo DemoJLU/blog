@@ -1,5 +1,5 @@
 # blog
-这是一个spring boot项目，model层用mybatis和mysql。sql文件在sql文件夹中，包含结构和数据。 
+这是一个spring boot项目，前端jQuery，model层用mybatis和mysql。sql文件在sql文件夹中，包含结构和数据。 
 
 目标是建立一个带备忘录的博客系统
 
