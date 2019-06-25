@@ -45,9 +45,13 @@ require(['../config'], function (config) {
         date = time.substring(0,19);//截止时间字符串转时间
         date = time.replace(/-/g,'/');
         var date2 = new Date(date).getTime();
-        var date3 = date2 - date1.getTime(); //时间差的毫秒数
-        var leave = date3%(24*3600*1000)    //计算天数后剩余的毫秒数
-        var hours=Math.floor(leave/(3600*1000))
+        // var date3 = date2 - date1.getTime(); //时间差的毫秒数
+        // var leave = date3%(24*3600*1000)    //计算天数后剩余的毫秒数
+        // var hours=Math.floor(leave/(3600*1000))
+        var total = (date2 - date1.getTime()) / 1000;
+        var day = parseInt(total / (24 * 60 * 60)); //计算整数天数
+        var afterDay = total - day * 24 * 60 * 60; //取得算出天数后剩余的秒数
+        var hours = parseInt(afterDay / (60 * 60))+(day*24); //计算整数小时数
         if (hours < hourParam){
             return true;
         } else {
