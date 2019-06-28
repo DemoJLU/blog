@@ -10,6 +10,10 @@
         select count(*) from tbl_user where USER_ID=#{user_id} and user_pass=#{passWord}
     </select>
 
+    <select id="userIdMatchCount" parameterType="java.lang.String" resultType="Integer">
+        select count(*) from tbl_user where USER_ID=#{user_id}
+    </select>
+
     <update id="updateUser" parameterType="com.danxiaochong.blog.pojo.system.User">
 		update TBL_user set
 		pass_wod=#{passWord},user_name=#{userName} where user_id=#{userId}
@@ -34,5 +38,8 @@
         ORDER BY f.FUNC_LEVEL
     </select>
 
+    <insert id="addUser" parameterType="Map">
+        insert into tbl_user (user_id,user_pass,user_name,email_address) values (#{userNameR},#{passwordR},#{nickname},#{email})
+    </insert>
 
 </mapper>

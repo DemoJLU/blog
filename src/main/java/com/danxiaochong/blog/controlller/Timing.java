@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * 定时任务
+ * */
 @Component
 public class Timing {
 

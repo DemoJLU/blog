@@ -1,23 +1,23 @@
 /* login css */
 .login-container {
     height: 100%;
-    background: #373d41 url("../image/login1.jpg") no-repeat;
+    background: #373d41 url("../image/login.jpg") no-repeat;
     background-size: cover;
 }
 #head {
-    height: 70px;
+    height: 60px;
     width: 100%;
-    background-color: 	#FF0000;
+    background-color: 	#B4EEB4;
     text-align: center;
     position: relative;
 }
 
 .title {
-    font-family: "LiSu ";
-    color: 	#FFFFFF;
+    font-family: "Hannotate SC ";
+    color: 	#737373;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 7%;
     transform: translate(-50%, -50%);  /* 使用css3的transform来实现 */
     font-size: 36px;
     height: 40px;
@@ -36,7 +36,7 @@
     width: 490px;
     margin: 70px auto 0;
     padding: 30px 55px;
-    background-color: #696969;
+    background-color: #D1EEEE;
     border-radius: 10px;
 }
 .login-box-title {

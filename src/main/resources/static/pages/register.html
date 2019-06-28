@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="en" style="height: 100%;">
+<head>
+    <title>Register</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/bootstrap/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/bootstrap/jquery.datetimepicker.min.css" />
+    <link rel="stylesheet" href="../css/vehicle.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <script>
+        if (window != top)
+            top.location.href = location.href;
+    </script>
+</head>
+<body style="height: 100%;">
+<div  class="login-container">
+    <div class="header" id="head">
+        <div class="title">呼啸山庄</div>
+    </div>
+    <div  class="login-box"  >
+        <h4 class="login-box-title">填写注册信息</h4>
+        <div class="login-tip">
+            <span class="text-danger" style="display: none;"></span>
+        </div>
+        <form class="form-horizontal" >
+            <div class="form-group">
+                <label for="userNameR" class="control-label sr-only">用户名</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                    <input type="text" class="form-control input-md" required id="userNameR" placeholder="请输入登录名称">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="passwordR" class="control-label sr-only">密码</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                    <input type="password" class="form-control input-md" required id="passwordR" placeholder="请输入登录密码">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="passwordRC" class="control-label sr-only">确认密码</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                    <input type="password" class="form-control input-md" required id="passwordRC" placeholder="请再次输入登录密码">
+                </div>
+            </div>
+            <div class="form-group ">
+<!--                <label for="inputPersionModify" class="control-label"><span style="color:red">*</span>邮箱：</label>-->
+                <input id="email" class="form-control" required placeholder="邮箱">
+            </div>
+            <div class="form-group ">
+                <!--                <label for="inputPersionModify" class="control-label"><span style="color:red">*</span>邮箱：</label>-->
+                <input id="nickname" class="form-control" required placeholder="昵称">
+            </div>
+            <div class=" form-group">
+                <button type="button" id="registerConfirm" class="btn btn-login btn-block">确认</button>
+            </div>
+            <div class=" form-group">
+                <a href="/login" id='a1'>已有账号，去登陆</a>
+            </div>
+        </form>
+    </div>
+    <div class="copyright">
+        <footer> <span style="font-size:18px;color:white">2018 © 帆帆帆 </span></footer>
+    </div>
+</div>
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="../js/lib/require.js" data-main="../js/login.js"></script>
+</body>
+</html>

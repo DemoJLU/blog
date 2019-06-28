@@ -62,6 +62,19 @@ public class UserServiceImpl implements UserService {
         }
     }
     /**
+     * 是否相同userId
+     * */
+    @Override
+    public boolean sameUserId(String user_id) {
+        int matchCount = userMapper.userIdMatchCount(user_id);
+        if (matchCount >0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    /**
      * 獲取用戶角色
      * */
     @Override
@@ -91,6 +104,15 @@ public class UserServiceImpl implements UserService {
         }
         return errCode;
     }
+    /**
+     * 新增用户
+     * */
+    @Override
+    public int addUser(Map<String, String> params) {
+        int result =userMapper.addUser(params);
+        return result;
+    }
+
     @Override
     public List<MenuNode> buildUserMenu(String userId) {
         List<MenuNode> menus = new ArrayList<MenuNode>();

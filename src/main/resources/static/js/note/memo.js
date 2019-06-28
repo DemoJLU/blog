@@ -45,9 +45,6 @@ require(['../config'], function (config) {
         date = time.substring(0,19);//截止时间字符串转时间
         date = time.replace(/-/g,'/');
         var date2 = new Date(date).getTime();
-        // var date3 = date2 - date1.getTime(); //时间差的毫秒数
-        // var leave = date3%(24*3600*1000)    //计算天数后剩余的毫秒数
-        // var hours=Math.floor(leave/(3600*1000))
         var total = (date2 - date1.getTime()) / 1000;
         var day = parseInt(total / (24 * 60 * 60)); //计算整数天数
         var afterDay = total - day * 24 * 60 * 60; //取得算出天数后剩余的秒数
@@ -61,24 +58,6 @@ require(['../config'], function (config) {
 
     require(['jquery', 'bootstrap', 'common/dt', 'common/slider','common/dateFormat'], function ($, bootstrap, dataTable) {
         $('#input_people').val(user.userName);  //设置录入人
-        //加载优先级下拉框
-        // $.ajax({
-        //     url: config.basePath + '/dayShiftPlan/dropDownListPriority',
-        //     type: 'get',
-        //     data: null,
-        //     //contentType: 'application/json',
-        //     dataType: 'json',
-        //     success: function (data) {
-        //         if(data){
-        //             var option='';
-        //             for(var i=0;i<data.length;i++){
-        //                 option='<option value="'+data[i].priority_id+'">'+data[i].priority_name+'</option>';
-        //                 $("#priorityYes").append(option);
-        //                 $("#upPriorityYes").append(option);
-        //             }
-        //         }
-        //     }
-        // });
 
         var dayShiftPlan = dataTable('dayShiftPlan', {
             ajax: {
@@ -306,71 +285,6 @@ require(['../config'], function (config) {
 
         });
 
-
-        // $('#upLoad').on('click', function (e) {
-        //     var form = $('#form1');//上传文件
-        //     var formdata = new FormData(form);
-        //     $.ajax({
-        //         type : "POST",
-        //         url : config.basePath + '/memo/file',
-        //         data : formdata,
-        //         async: false,
-        //         cache: false,
-        //         contentType: false,
-        //         processData: false,
-        //         success : function(msg) {
-        //             if(msg){
-        //                 alert('提交成功！');
-        //             }
-        //         }
-        //     });
-        // });
-
-        //第一层任务
-        $('#btnNo').on('click', function (e) {
-            var inPeo = $('#input_people').val();
-            $('#input_user').val(inPeo);
-
-            //必填项验证
-            $('#addPlanOne .form-group').removeClass('has-error');
-            try {
-                $('#addPlanOne').find('.form-control').each(function (i, dom) {
-                    if (dom.required && !dom.value) {
-                        throw dom;
-                    }
-                });
-            } catch (e) {
-                $(e).parent().addClass('has-error');
-                // var input_persion=document.getElementById('input_persion').value;
-                //if(input_persion==''){
-                return;
-                //}
-            }
-            $("#repairModalNew2").modal('show');
-        });
-        //第一层任务
-        $('#btnYes').on('click', function (e) {
-            var inPeo = $('#input_people').val();
-            $('#input_user').val(inPeo);
-
-            //必填项验证
-            $('#addPlanOne .form-group').removeClass('has-error');
-            try {
-                $('#addPlanOne').find('.form-control').each(function (i, dom) {
-                    if (dom.required && !dom.value) {
-                        throw dom;
-                    }
-                });
-            } catch (e) {
-                $(e).parent().addClass('has-error');
-                // var input_persion=document.getElementById('input_persion').value;
-                //if(input_persion==''){
-                return;
-                //}
-            }
-            $("#repairModalNew1").modal('show');
-
-        });
         //显示完成modal
         $('#doneModal').on('show.bs.modal', function (e) {
             var rowData = dayShiftPlan.row($(e.relatedTarget).parent()).data();
@@ -401,11 +315,8 @@ require(['../config'], function (config) {
                 }
             })
         });
-        //车号条件查询
+        //条件查询
         $('#btnQuery').on('click', function (e) {
-//        	params ={
-//        			vehicle_id:$('#vehicle_id').val()
-//        	};
             dayShiftPlan.ajax.reload();
         });
         //今日
@@ -417,12 +328,6 @@ require(['../config'], function (config) {
             dayShiftPlan.ajax.reload();
         });
         $('#btnCheck').click(function () {
-//            var params = {
-//            		memo_start_time: $('#memo_start_time').val()
-//            };
-//            dayShiftPlan.settings()[0].ajax.data = function (d) {
-//                return $.extend({}, d, params);
-//            };
             dayShiftPlan.ajax.reload();
         });
         //选择删除
@@ -524,136 +429,5 @@ require(['../config'], function (config) {
             $('#deadline').val('');
 //      	 $('#matter_get').html("");
         }
-
-        //比对车底号  如Z198/5-Z196/7
-        // function isTrainNum(allNum,inputNum){
-        //     var ret=false;
-        //     if(allNum!=null&&allNum!=""){
-        //         var allNumArr=allNum.split("-");
-        //         for(var j=allNumArr.length-1;j>=0;j--){
-        //             var lastAllNum=allNumArr[j];
-        //             if(lastAllNum!=null&&lastAllNum!=""){
-        //                 if(lastAllNum.indexOf("/")>0){
-        //                     var lastAllNumArr=lastAllNum.split("/");
-        //                     var n2=lastAllNumArr[lastAllNumArr.length-1];
-        //                     var n1=lastAllNumArr[0].substring(0,lastAllNumArr[0].length-n2.length);
-        //                     var newNum=n1+n2;
-        //                     if(inputNum==newNum){
-        //                         ret=true;
-        //                         break;
-        //                     }
-        //                 }else{
-        //                     if(inputNum==lastAllNum){
-        //                         ret=true;
-        //                         break;
-        //                     }
-        //                 }
-        //             }
-        //
-        //         }
-        //     }
-        //     return ret;
-        // }
-        //长效命令到期提示滚动
-        // function getExpireNoticeDetail(){
-        //     $.ajax({
-        //         url: config.basePath + '/planning/commandNotice/listExpireNoticeDetailInfo',
-        //         type: 'post',
-        //         data: null,
-        //         //contentType: 'application/json',
-        //         dataType: 'json',
-        //         success: function (ret) {
-        //             var msg=ret.data;
-        //             //获得当前<ul>
-        //             var $uList = $("#scrollBox ul");
-        //             $uList.empty();
-        //             //var scrollTimer = null;
-        //             if(msg!=null&&msg.length>0){
-        //                 detailSize=msg.length;
-        //                 $("#noticeDetailSize").text(msg.length);
-        //                 for(var i=0;i<msg.length;i++){
-        //                     $uList.append('<li><a title="'+msg[i].detail_content+'" data-cmdNum="'+msg[i].command_num+'">'+(i+1)+'、【'+msg[i].command_num+'号第'+msg[i].detail_order+'项】'+formatText(msg[i].detail_content,35)+'</a></li>');
-        //                 }
-        //             }else{
-        //                 detailSize=0;
-        //                 $("#noticeDetailSize").text("0");
-        //                 $uList.append('<li><a href="#">未查询到相关到期命令。</a></li>')
-        //             }
-        //         }
-        //     });
-        // }
-        //触摸清空定时器,展开关闭窗口
-        // function expireNoticeDetailScroll(){
-        //     var $uList = $("#scrollBox ul");
-        //     $uList.hover(function () {
-        //         clearInterval(scrollTimer);
-        //     },function () {//离开启动定时器
-        //         scrollTimer = setInterval(function () {
-        //             scrollList($uList);
-        //         },5000);
-        //     }).trigger("mouseleave"); //自动触发触摸事件
-        //     $("#noticeDetailAlert .close .glyphicon-chevron-down").click(function(){
-        //         $(this).hide();
-        //         $(this).siblings().show();
-        //         if(detailSize>1){
-        //             $("#noticeDetailAlert").css("height",detailSize*50);
-        //         }else{
-        //             $("#noticeDetailAlert").css("height",50);
-        //         }
-        //     })
-        //     $("#noticeDetailAlert .close .glyphicon-chevron-up").click(function(){
-        //         $(this).hide();
-        //         $(this).siblings().show();
-        //         $("#noticeDetailAlert").css("height",50);
-        //     })
-        //     $("#scrollBox ul").on('click', 'li a', function () {
-        //         var $uList = $("#scrollBox ul");
-        //         scrollTimer = setInterval(function () {
-        //             scrollList($uList);
-        //         },5000);
-        //         var cmdNum=$(this).attr("data-cmdNum"); //获取a标签存储的命令号
-        //         window.parent.noticeDetailCmdNum=cmdNum;  //多条页面传参
-        //         var tabId="commandNotice";
-        //         var dir="planning";
-        //         var tabName="长效命令公告";
-        //         var index=$(window.parent.document);
-        //         if (index.find('#' + tabId).length == 0) {
-        //             var title = $('<a href="#' + tabId + '" role="' + dir + '" data-toggle="tab">' + tabName + '</a>');
-        //             if (index.find('.nav-tabs li').length > 0) {
-        //                 title.append('<i class="close">&times;</i>');
-        //             }
-        //             //console.log($('.tab-content'));
-        //             index.find('.nav-tabs').append($('<li id="tab_' + tabId + '"></li>').append(title));
-        //             index.find('.tab-content').append('<div id="'+ tabId + '" role="tabpanel" class="tab-pane active"></div>');
-        //             // $('#' + tabId).load('./' + dir + '/' + tabId + '.html');
-        //             index.find('#' + tabId).append('<iframe scrolling="auto" frameborder="0" src="./' + dir + '/' + tabId + '.html" style="width:100%;height:'+(document.documentElement.clientHeight-0)+'px;overflow:hidden;"></iframe>');
-        //         }
-        //         index.find('#tab_' + tabId).addClass('active').siblings().removeClass('active');
-        //         index.find('#' + tabId).addClass('active').siblings().removeClass('active');
-        //         var aaa=index.find('#' + tabId).find("iframe")[0].contentDocument;
-        //         //$(aaa).find("#btnReset").click();
-        //         $(aaa).find("#commandNumQuery").val(cmdNum);
-        //         $(aaa).find("#commandTypeQuery").val("");
-        //         $(aaa).find("#commandContentQuery").val("");
-        //         $(aaa).find("#btnQuery").click();
-        //     })
-        // }
-        //滚动动画
-        // function scrollList(obj) {
-        //     //获得当前<li>的高度
-        //     var scrollHeight = $("ul li:first").height();
-        //     //滚动出一个<li>的高度
-        //     obj.stop().animate({marginTop:-scrollHeight},900,function () {
-        //         //动画结束后，将当前<ul>marginTop置为初始值0状态，再将第一个<li>拼接到末尾。
-        //         obj.css({marginTop:0}).find("li:first").appendTo(obj);
-        //     });
-        // }
-        //省略长字符串
-        // function formatText(str,size){
-        //     if(str.length>size){
-        //         str=str.substring(0,size-3)+"...";
-        //     }
-        //     return str;
-        // }
     });
 });

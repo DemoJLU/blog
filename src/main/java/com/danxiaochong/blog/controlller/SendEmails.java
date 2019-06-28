@@ -9,7 +9,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
-
+/**
+ * 备忘录的到期邮件提醒
+ * */
 public class SendEmails {
     //发件人地址
     public static String senderAddress = "1171403238@qq.com";

@@ -6,10 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -48,6 +45,29 @@ public class LoginController {
             session.setAttribute("AUTH_USER",user);
         }
         return  code;
+    }
+
+    @ApiOperation("注册")
+    @ResponseBody
+    @RequestMapping(value = "register", method = {RequestMethod.POST})
+    public String register(@RequestParam Map<String, String> params) {
+        String user_id = params.get("userNameR");
+        String password = params.get("passwordR");
+        String passwordRC = params.get("passwordRC");
+        String code = "1";
+        if (!password.equals(passwordRC)){
+            code = "2";
+        }
+        boolean flag = userService.sameUserId(user_id);
+        if (flag){
+             code = "3";
+        }else{
+            int result = userService.addUser(params);
+            if (result == 0){
+                code = "4";
+            }
+        }
+        return code;
     }
 
 

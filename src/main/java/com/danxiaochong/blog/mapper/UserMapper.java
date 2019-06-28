@@ -31,6 +31,15 @@ public interface UserMapper {
      * 更新用戶菜單
      * */
     void updateUserUrl(Map<String, Object> map);
+    /**
+     * 是否相同id
+     * */
+    Integer userIdMatchCount(String user_id);
+
+    /**
+     * 新增用户
+     * */
+    int addUser(Map<String, String> params);
 
     User getUserById(String userId);
 }

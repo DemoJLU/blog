@@ -66,4 +66,59 @@ require(['config'], function (config) {
         Login.hideError();
         Login.login();
     });
+
+    //点击注册按钮
+    $('#register').on('click', function (e) {
+        window.location.href = "./pages/register.html";
+        // $('#registerModal').modal('show');
+    });
+    //确认注册信息
+    $('#registerConfirm').on('click', function (e) {
+//        	alert($('#input_persion').val());
+//        必填项验证
+        $('#repairModalLabel .form-group').removeClass('has-error');
+        try {
+            $('#repairModalLabel').find('.form-control').each(function (i, dom) {
+                if (dom.required && !dom.value) {
+                    throw dom;
+                }
+            });
+        } catch (e) {
+            $(e).parent().addClass('has-error');
+            // var input_persion=document.getElementById('input_persion').value;
+            //if(input_persion==''){
+            return;
+            //}
+        }
+        var userNameR=document.getElementById('userNameR').value;
+        var passwordR=document.getElementById('passwordR').value;
+        var passwordRC=document.getElementById('passwordRC').value;
+        var email=document.getElementById('email').value;
+        var nickname=document.getElementById('nickname').value;
+        params ={
+            userNameR:userNameR,
+            passwordR:passwordR,
+            passwordRC:passwordRC,
+            email:email,
+            nickname:nickname,
+        };
+        $.post(config.basePath + '/register', params, function (data) {
+            if (data === '1') {
+                alert('成功');
+                var el=document.getElementById('a1');
+                el.target = '_new'; //指定在新窗口打开
+                el.click();//触发打开事件
+            }else if(data === '2'){
+                alert('两次输入密码不一致!');
+            }else if(data === '3'){
+                alert('用户名已被占用!');
+            }else{
+                alert('失败!');
+            }
+        });
+    });
+    //已有账号，去登陆
+    $('#goLogin').on('click', function (e) {
+         window.location.href = "login.html";
+    });
 });
