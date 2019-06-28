@@ -19,7 +19,7 @@
         <div class="title">呼啸山庄</div>
     </div>
     <div  class="login-box"  >
-        <h4 class="login-box-title">填写注册信息</h4>
+        <h4 class="login-box-title">请填写注册信息</h4>
         <div class="login-tip">
             <span class="text-danger" style="display: none;"></span>
         </div>
@@ -46,12 +46,17 @@
                 </div>
             </div>
             <div class="form-group ">
-<!--                <label for="inputPersionModify" class="control-label"><span style="color:red">*</span>邮箱：</label>-->
-                <input id="email" class="form-control" required placeholder="邮箱">
+                <label for="email" class="control-label sr-only">邮箱</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                    <input type="text" id="email" class="form-control input-md" required placeholder="邮箱">
+                </div>
             </div>
             <div class="form-group ">
-                <!--                <label for="inputPersionModify" class="control-label"><span style="color:red">*</span>邮箱：</label>-->
-                <input id="nickname" class="form-control" required placeholder="昵称">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-heart"></span></div>
+                    <input type="text" id="nickname" class="form-control input-md" required placeholder="昵称">
+                </div>
             </div>
             <div class=" form-group">
                 <button type="button" id="registerConfirm" class="btn btn-login btn-block">确认</button>
