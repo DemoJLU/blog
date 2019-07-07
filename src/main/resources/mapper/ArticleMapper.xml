@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.danxiaochong.blog.mapper.note.ArticleMapper">
+<mapper namespace="com.danxiaochong.blog.mapper.blog.ArticleMapper">
 
+    <select id="getArticleList" parameterType="Map" resultType="com.danxiaochong.blog.pojo.blog.Article">
+        select a.article_id as articleId,a.article_user_id as articleUserId,a.article_title as articleTitle,
+        a.article_content as articleContent,a.article_view_count as articleViewCount,
+        a.article_comment_count as articleCommentCount,
+        a.article_like_count as articleLikeCount,a.article_is_comment as articleIsComment,a.article_status as articleStatus,
+        a.article_order as articleOrder,
+        date_format(a.article_update_time, '%Y-%m-%d %H:%i:%s') as articleUpdateTime,
+        date_format(a.article_create_time, '%Y-%m-%d %H:%i:%s') as articleCreateTime,
+        a.article_summary as articleSummary,
+        u.user_name as userName
+        from article a join tbl_user u on a.article_user_id=u.user_id
+        where 1=1
+        <if test='articleId!="" and articleId!=null'>
+            AND article_id = #{articleId}
+        </if>
+<!--        <if test='deadline!=null'>-->
+<!--            AND p.memo_end_time  &lt;= #{deadline}-->
+<!--        </if>-->
+<!--        <if test='persion!="" and persion!=null'>-->
+<!--            AND p.input_persion = #{persion}-->
+<!--        </if>-->
+<!--        <if test='matter!="" and matter!=null'>-->
+<!--            AND p.matter = #{matter}-->
+<!--        </if>-->
+<!--        <if test='priority!="" and priority!=null'>-->
+<!--            AND p.priority = #{priority}-->
+<!--        </if>-->
+        order by articleUpdateTime desc
+    </select>
 
 </mapper>
