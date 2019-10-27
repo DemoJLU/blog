@@ -6,6 +6,37 @@ require(['config'], function (config) {
         errorInfo: {
             error1: '用户名密码不正确'
         },
+        /*
+        * 以下为回车逻辑 最后一个回车登录
+        * 回车函数 ，回车next focus
+        * shift + 回车 up focus
+        */
+        keyMove: function(e, next, up){
+            if (e.keyCode === 13){
+                $(next).focus()
+            }
+            if (e.keyCode == 13 && e.shiftKey){
+                $(up).focus()
+            }
+        },
+        getNextInputId(id){
+            let inputIdArr = Login.getInputIdArr()
+            return inputIdArr[(inputIdArr.indexOf(id) + 1 + inputIdArr.length ) % inputIdArr.length]
+        },
+        getPrevInputId(id){
+            let inputIdArr = Login.getInputIdArr()
+            return inputIdArr[(inputIdArr.indexOf(id) - 1 + inputIdArr.length ) % inputIdArr.length]
+        },
+        getInputIdArr(){
+            let inputIdArr = []
+            $('.form-horizontal').find('.form-control').each(function(index, item){
+                inputIdArr.push(item.id)
+            })
+            return inputIdArr
+        },
+        /*
+        * validate逻辑
+        */
         hasError: function (input) {
             input.parents('.form-group').addClass('has-error');
         },
@@ -54,12 +85,18 @@ require(['config'], function (config) {
     };
 
     $('.form-horizontal .form-control').keypress(function (e) {
-        Login.remError($(this));
-        if (e.which == 13) {
-            Login.hideError();
-            Login.login();
-            return false;
+        if (Login.getNextInputId(e.target.id) === Login.getInputIdArr()[0] && !e.shiftKey){ // 最后一个回车提交
+            console.log('提交')
+        } else {
+            Login.keyMove(e, '#' + Login.getNextInputId(e.target.id), '#' + Login.getPrevInputId(e.target.id));
         }
+        
+        // Login.remError($(this));
+        // if (e.which == 13) {
+        //     Login.hideError();
+        //     Login.login();
+        //     return false;
+        // }
     });
 
     $('button[type="submit"]').on('click', function (e) {
@@ -75,6 +112,7 @@ require(['config'], function (config) {
     });
     //确认注册信息
     $('#registerConfirm').on('click', function (e) {
+        // return
 //        	alert($('#input_persion').val());
 //        必填项验证
         $('#repairModalLabel .form-group').removeClass('has-error');
@@ -104,6 +142,7 @@ require(['config'], function (config) {
             nickname:nickname,
         };
         $.post(config.basePath + '/register', params, function (data) {
+            console.log(data)
             if (data === '1') {
                 alert('成功');
                 var el=document.getElementById('a1');

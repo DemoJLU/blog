@@ -14,8 +14,10 @@ define(function () {
     var pos = currentPath.indexOf(pathName);
     // 获取主机地址，如：http://localhost:8080
     var basePath = currentPath.substring(0, pos);
-    if (pathName.toUpperCase().indexOf('BLOG') != -1) {
-        basePath += pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+    if (pathName.toUpperCase().indexOf('BLOG') != -1) { // 这应该是判断静态地址吧
+        var staticPos = currentPath.indexOf('pages');
+        // basePath += pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+        basePath = currentPath.substring(0, staticPos);
     }
     require.config({
         baseUrl: basePath + '/js/lib',
