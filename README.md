@@ -10,3 +10,13 @@
 可见性分为三个层次：自己可见，家庭可见，公共可见。
 
 以上是简要概述，详见Design Documentation文件夹中的word文档。
+
+#### 已有页面需要完善的点
+
+register
+    1. 回车行为优化 done
+    2. 表单验证 done
+memo
+    页面布局优化 done
+articles
+    现在看不到数据

@@ -19,13 +19,9 @@ require(['config'], function (config) {
                 $(up).focus()
             }
         },
-        getNextInputId(id){
+        getSiblingInputId(id, num){
             let inputIdArr = Login.getInputIdArr()
-            return inputIdArr[(inputIdArr.indexOf(id) + 1 + inputIdArr.length ) % inputIdArr.length]
-        },
-        getPrevInputId(id){
-            let inputIdArr = Login.getInputIdArr()
-            return inputIdArr[(inputIdArr.indexOf(id) - 1 + inputIdArr.length ) % inputIdArr.length]
+            return inputIdArr[(inputIdArr.indexOf(id) + num + inputIdArr.length ) % inputIdArr.length]
         },
         getInputIdArr(){
             let inputIdArr = []
@@ -37,6 +33,21 @@ require(['config'], function (config) {
         /*
         * validate逻辑
         */
+        validateInput (e) { // 简单验证 为空验证 && 邮箱验证 FIXME: 长度验证 && 字符验证
+            var target = e.target
+            var id = target.id
+            var val = $(target).val()
+            var name = target.dataset.text
+            if (!$.trim(val)){ // 验证不能为空
+                Login.showError(name + "不能为空")
+            } else {
+                Login.hideError()
+                if (name === '邮箱') {
+                    var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+                    !reg.test(val) && Login.showError(name + "不符合规则")
+                }
+            }
+        },
         hasError: function (input) {
             input.parents('.form-group').addClass('has-error');
         },
@@ -85,10 +96,10 @@ require(['config'], function (config) {
     };
 
     $('.form-horizontal .form-control').keypress(function (e) {
-        if (Login.getNextInputId(e.target.id) === Login.getInputIdArr()[0] && !e.shiftKey){ // 最后一个回车提交
+        if (Login.getInputIdArr().indexOf(e.target.id) === (Login.getInputIdArr().length - 1) && !e.shiftKey){ // 最后一个回车提交
             console.log('提交')
         } else {
-            Login.keyMove(e, '#' + Login.getNextInputId(e.target.id), '#' + Login.getPrevInputId(e.target.id));
+            Login.keyMove(e, '#' + Login.getSiblingInputId(e.target.id, 1), '#' + Login.getSiblingInputId(e.target.id, -1));
         }
         
         // Login.remError($(this));
@@ -161,4 +172,6 @@ require(['config'], function (config) {
     $('#goLogin').on('click', function (e) {
          window.location.href = "login.html";
     });
+    // 监听所有的input的blur事件，进行表单验证
+    $('.form-control').on('blur', Login.validateInput)
 });

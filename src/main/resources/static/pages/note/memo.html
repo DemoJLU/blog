@@ -24,13 +24,37 @@
         #scrollBox ul li a:HOVER {
             cursor: pointer;
         }
+        #search-panel{
+            position: fixed;
+            z-index: 10;
+            top: 0;
+            bottom: 0;
+            left: -300px;
+            width: 300px;
+            border-right: 1px solid #e4e4e4;
+            overflow: hidden;
+            box-sizing: border-box;
+            padding:0 20px;
+            background: #fff;
+        }
+        .search-remove{
+            display: none;
+        }
+        #content-panel{
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
     </style>
 </head>
 <body>
 <div class="container-fluid"  margin: 70px auto 0;>
     <div class="row">
-        <div id="search-panel" class="col-xs-2 col-md-2">
-            <div style="padding-left: 20px;">
+        <div id="search-panel" class="aside-slider">
+            <div>
                 <h3 class="text-info search-title">
                     备忘查询<span class="glyphicon glyphicon-remove search-remove"></span>
                 </h3>
@@ -85,10 +109,10 @@
                 </table>
             </div>
         </div>
-        <div id="content-panel" class="col-xs-10 col-md-10">
+        <div id="content-panel">
             <dl class="warning-content">
                 <dt>
-                    <h3 class="content-title"><span class="glyphicon glyphicon-menu-hamburger search-show"></span> 备忘信息</h3>
+                    <h3 class="content-title"><span id='aside-toggle' class="glyphicon glyphicon-indent-left menu-toggle"></span> 备忘信息</h3>
 <!--                    <div id="noticeDetailAlert" class="alert alert-info"  style="position: absolute;left: 25%;top: 8px;width: 50%;height: 50px;padding-top:5px;overflow: hidden;z-index: 999">-->
 <!--                        <a href="#" class="close"  style="color: grey">-->
 <!--                            <span class="glyphicon glyphicon-chevron-down"></span>-->

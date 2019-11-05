@@ -6,19 +6,20 @@ define(['jquery'], function ($) {
     $(function () {
 
         if ($('#search-panel')[0]) {
+            $('#aside-toggle').on('click', toggleAsideSlide)
+            $('.search-remove').on('click', toggleAsideSlide)
+            // $('.search-remove').on('click', function () {
+            //     $('#search-panel').fadeOut(300, function () {
+            //         $('#content-panel').removeClass().addClass('col-xs-12 col-md-12');
+            //         $('.search-show').show();
+            //     });
+            // });
 
-            $('.search-remove').on('click', function () {
-                $('#search-panel').fadeOut(300, function () {
-                    $('#content-panel').removeClass().addClass('col-xs-12 col-md-12');
-                    $('.search-show').show();
-                });
-            });
-
-            $('.search-show').on('click', function () {
-                $('#content-panel').removeClass().addClass('col-xs-10 col-md-10');
-                $('#search-panel').fadeIn(300);
-                $(this).hide();
-            });
+            // $('.search-show').on('click', function () {
+            //     $('#content-panel').removeClass().addClass('col-xs-10 col-md-10');
+            //     $('#search-panel').fadeIn(300);
+            //     $(this).hide();
+            // });
 
             require(['datetimepicker'], function () {
                 var date = new Date();
@@ -43,6 +44,26 @@ define(['jquery'], function ($) {
         }
 
     });
+
+    function toggleAsideSlide () {
+        var asideW = $('#search-panel').css('width')
+        var contentW = $('#content-panel')[0].offsetWidth
+        
+        if ($('#aside-toggle')[0].className.indexOf('glyphicon-indent-left') != -1) {
+            $('#aside-toggle').removeClass('glyphicon-indent-left').addClass('glyphicon-indent-right')
+            $('.aside-slider').animate({left: 0})
+            if (contentW > 1000) {
+                $('#content-panel').animate({left: asideW})
+                $('.search-remove').hide()
+            } else {
+                $('.search-remove').show()
+            }
+        } else {
+            $('#aside-toggle').removeClass('glyphicon-indent-right').addClass('glyphicon-indent-left')
+            $('.aside-slider').animate({left: '-' + asideW})
+            $('#content-panel').animate({left: 0})
+        }
+    }
 
     function initSliderBox () {
         if ($('.slider-box').length <= 0) {

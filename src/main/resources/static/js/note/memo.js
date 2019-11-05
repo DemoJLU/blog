@@ -33,10 +33,10 @@ require(['../config'], function (config) {
 
     //补0操作,当时间数据小于10的时候，给该数据前面加一个0
     function getzf(num){
-        if(parseInt(num) < 10){
-            num = '0'+num;
-        }
-        return num;
+        return num.toString()[1] ? num : '0' + num
+    }
+    function padLeftZ(num, len){
+        return '00000000'.slice(8 - (len - num.toString().length)) + num
     }
 
     //到期运算
