@@ -54,6 +54,20 @@ require(['../config'], function (config) {
         });
 
     })
+
+    $('.fullscreenmenu__module').each(function () {
+        var self = $(this),
+            triggerID = self.attr('trigger');
+
+        self.on("click", function () {
+            $(triggerID).toggleClass('open');
+            $(this).toggleClass('open');
+        });
+        $(triggerID).on("click", function () {
+            $(triggerID).toggleClass('open');
+            self.toggleClass('open');
+        });
+    });
 });
 
 

@@ -29,6 +29,15 @@ public class LoginController {
         return "login";
     }
 
+    /**
+     * 主页
+     */
+    @ApiOperation("主页")
+    @RequestMapping(value = "/index")
+    public String indexPage() {
+        return "pages/index.html";
+    }
+
     @ApiOperation("用户名密码判断")
     @ResponseBody
     @RequestMapping(value = "loginCheck", method = {RequestMethod.POST})

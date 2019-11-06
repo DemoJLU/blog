@@ -32,4 +32,13 @@ public class ArticleServiceImpl implements ArticleService {
         }
         return articles;
     }
+
+    /**
+     * 编辑
+     * */
+    @Override
+    public int editArticle(Map<String, Object> params) {
+        int result = articleMapper.editArticle(params);
+        return result;
+    }
 }

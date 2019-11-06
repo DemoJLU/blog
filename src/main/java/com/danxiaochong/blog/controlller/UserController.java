@@ -58,7 +58,9 @@ public class UserController {
     @RequestMapping(value = "/getRoleIDbyUser", method = { RequestMethod.GET })
     public Map<String, Object> getRoleIDbyUser(HttpSession httpSession) {
         logger.info("获取用户基本信息");
-        User user = (User) httpSession.getAttribute("AUTH_USER");
+        User user = new User();
+      //  user = (User) httpSession.getAttribute("AUTH_USER");
+        user.setUser_id("yf");
         List<UserRole> roles = userService.getUserRole(user.getUser_id());
         List<MenuNode> menus = userService.buildUserMenu(user.getUser_id());
         Map<String, Object> ret = new HashMap<String, Object>();

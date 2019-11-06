@@ -10,4 +10,8 @@ public interface ArticleService {
      * 获取文章
      * */
     List<Article> getArticleList(Map<String,Object> params);
+    /**
+     * 编辑
+     * */
+    int editArticle(Map<String,Object> params);
 }
