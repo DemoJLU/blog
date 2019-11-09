@@ -11,7 +11,6 @@ require(['config'], function (config) {
                 success : function(result) {
                     user.userId = result.userId;
                     user.userName = result.userName;
-                    // user.departmentId=result.departmentId;
                     user.roles = result.roles;
                     user.menus = result.menus;
                     user.idxUrl = result.idxUrl;

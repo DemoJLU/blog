@@ -1,124 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:margin="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Blog</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- Fonts-->
+    <meta charset="UTF-8">
+    <title>备忘录</title>
+
+    <link rel="stylesheet" href="../../css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap/dataTables.bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap/jquery.datetimepicker.min.css" />
+    <link rel="stylesheet" href="../../css/vehicle.css" />
     <link rel="stylesheet" type="text/css" href="/assets/fonts/fontawesome/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/fonts/pe-icon/pe-icon.css">
-    <!-- Vendors-->
     <link rel="stylesheet" type="text/css" href="/assets/vendors/bootstrap/grid.css">
     <link rel="stylesheet" type="text/css" href="/assets/vendors/magnific-popup/magnific-popup.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/vendors/swiper/swiper.css">
-    <!-- App & fonts-->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Open+Sans:400,700">
-    <link rel="stylesheet" type="text/css" id="app-stylesheet" href="/assets/css/main.css"><!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" id="app-stylesheet" href="/assets/css/main.css">
+    <style type="text/css">
+        #scrollBox ul{
+            list-style: none;
+            width: 100%;
+            height: 100%;
+        }
+        #scrollBox ul li,p{
+            width: 100%;
+            height: 40px;
+            box-sizing: border-box;
+            line-height: 40px;
+            text-align: left;
+            margin-right:-50px;
+        }
+        #scrollBox ul li a:HOVER {
+            cursor: pointer;
+        }
+    </style>
 </head>
-
 <body>
-<div class="page-wrap" id="root">
+<div class="container-fluid"  margin: 70px auto 0;>
+    <div class="row">
+        <div id="search-panel" class="col-xs-2 col-md-2">
+            <div style="padding-left: 20px;">
+                <h3 class="text-info search-title">
+                    乘醉听箫鼓 吟赏烟霞<span class="glyphicon glyphicon-remove search-remove"></span>
+                </h3>
+                <form>
+<!--                    <div class="form-group">-->
+<!--                        <input class="form-control" id="deadline">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <button type="button" id="btnQuery" class="btn btn-success form-control">搜索</button>-->
+<!--                    </div>-->
+                    <div class="form-group">
+                        <li><a href="editor.html">写博客</a>
+<!--                        <button class="btn btn-success form-control" οnclick="window.location.href='editor.html'">写博客</button>-->
+                    </div>
+                </form>
 
-    <!-- header -->
-    <header class="header header--fixed">
-        <div class="header__inner">
-            <div class="header__logo"><a href="index.html"><img src="../../assets/img/logo.png" alt="" style="width: 122px;"/></a></div>
-            <button id="btnMemo" type="button" class="btn btn-primary">备忘录</button>
-            <div class="navbar-toggle" id="fs-button">
-
-                <div class="navbar-icon"><span></span></div>
             </div>
         </div>
+        <div id="content-panel" class="col-xs-10 col-md-10">
+            <dl class="warning-content">
+                <dt>
+                    <h3 class="content-title"><span class="glyphicon glyphicon-menu-hamburger search-show"></span> 博客列表</h3>
+<!--                    <div class="pull-right">-->
+<!--                        <button type="button" id="btnAdd" class="btn btn-success" data-toggle="modal" data-target="#addPlanOne" data-action="add" style="width: 100px; margin: 15px 5px 10px 0;">写博客</button>-->
+<!--                        <button type="button" id="btnRefresh" class="btn btn-warning" style="width: 100px; margin: 15px 0 10px;">刷新</button>-->
+<!--                    </div>-->
+                </dt>
+                <dd>
+                    <div class="grid-css grid-css--masonry" data-col-lg="12" data-col-md="12" data-col-sm="12" data-col-xs="12" data-gap="30">
+                        <div class="grid__inner" >
 
-        <!-- fullscreenmenu__module -->
-        <div class="fullscreenmenu__module" trigger="#fs-button">
+                            <div class="grid-sizer" ></div>
 
-            <!-- overlay-menu -->
-            <nav class="overlay-menu">
+                            <div  id="fan">
 
-                <!--  -->
-                <ul class="wil-menu-list">
-                    <li><a href="index.html">Home</a>
-                    </li>
-                    <li><a href="about.html">About</a>
-                    </li>
-                    <li><a href="work.html">Work</a>
-                    </li>
-                    <li class="current-menu-item"><a href="blog.html">Blog</a>
-                    </li>
-                    <li><a href="contact.html">Contact</a>
-                    </li>
-                </ul><!--  -->
-
-            </nav><!-- End / overlay-menu -->
-
-        </div><!-- End / fullscreenmenu__module -->
-
-    </header><!-- End / header -->
-
-    <!-- Content-->
-    <div class="wil-content">
-
-        <!-- Section -->
-        <section class="awe-section">
-            <div class="container">
-
-                <!-- page-title -->
-                <div class="page-title pb-40">
-                    <h2 class="page-title__title">杂谈</h2>
-                    <p class="page-title__text">El amor en los tiempos del cólera</p>
-                    <div class="page-title__divider"></div>
-                </div><!-- End / page-title -->
-
-            </div>
-        </section>
-        <!-- End / Section -->
-
-
-        <!-- Section -->
-        <section class="awe-section bg-gray">
-            <div class="container">
-                <div class="grid-css grid-css--masonry" data-col-lg="12" data-col-md="12" data-col-sm="12" data-col-xs="12" data-gap="30">
-                    <div class="grid__inner" >
-                        <div class="grid-sizer" ></div>
-
-                        <div  id="fan">
+                            </div>
 
                         </div>
-
                     </div>
-                </div>
-                <div class="awe-text-center mt-50">
-                    <a class="md-btn md-btn--outline-primary " href="#">Load more
-                    </a>
-                </div>
-            </div>
-        </section>
-        <!-- End / Section -->
-
-    </div>
-    <!-- End / Content-->
-
-    <!-- footer -->
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-6 ">
-                    <p class="footer__coppy">2019 &copy; Copyright 呼啸山庄 All rights Reserved.</p>
-                </div>
-                <div class="col-md-6 col-lg-6 ">
-
-                </div>
-            </div>
+                </dd>
+            </dl>
         </div>
-    </div><!-- End / footer -->
-
+    </div>
 </div>
-<!-- Vendors-->
+
 <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
 
 <!--<script type="text/javascript" src="/assets/vendors/jquery/jquery.min.js"></script>-->
@@ -135,7 +100,5 @@
 <!--<script type="text/javascript" src="/assets/vendors/typed/typed.min.js"></script>-->
 
 <script src="../../js/lib/require.js" data-main="../../js/articles/article"></script>
-<!-- App-->
-<!--<script type="text/javascript" src="/assets/js/main.js"></script>-->
 </body>
 </html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LikeU.Admin</title>
+
+    <link rel="icon" href="favicon.ico" />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 4 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Ionicons -->
+    <link href="https://cdn.staticfile.org/ionicons/4.1.2/css/ionicons.min.css" rel="stylesheet">
+
+    <link href="https://cdn.staticfile.org/codemirror/5.38.0/codemirror.min.css" rel="stylesheet">
+    <!--富文本编辑器wangEditor-->
+    <link href="https://cdn.staticfile.org/wangEditor/10.0.13/wangEditor.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.org/wangEditor/10.0.13/fonts/w-e-icon.woff" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+    <!-- jQuery -->
+    <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="https://cdn.staticfile.org/fastclick/1.0.6/fastclick.min.js"></script>
+    <script src="https://cdn.staticfile.org/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+    <script src="https://cdn.staticfile.org/layer/2.3/layer.js"></script>
+    <script src="https://cdn.staticfile.org/codemirror/5.38.0/codemirror.min.js"></script>
+    <script src="https://cdn.staticfile.org/codemirror/5.38.0/addon/display/placeholder.min.js"></script>
+    <script src="https://cdn.staticfile.org/codemirror/5.38.0/mode/clike/clike.min.js"></script>
+    <script src="https://cdn.staticfile.org/codemirror/5.38.0/mode/sql/sql.min.js"></script>
+    <script src="https://cdn.staticfile.org/codemirror/5.38.0/mode/xml/xml.min.js"></script>
+    <!--富文本编辑器wangEditor-->
+    <script src="https://cdn.staticfile.org/wangEditor/10.0.13/wangEditor.min.js"></script>
+
+
+</head>
+<body>
+<!--<div class="container">-->
+<!--    <nav class="navbar navbar-dark bg-primary">-->
+<!--        <a class="navbar-brand" href="http://github.com/moshowgame/SpringBootCodeGenerator">SpringBootCodeGenerator</a>-->
+<!--        <ul class="nav navbar-nav">-->
+<!--            <li class="nav-item active">-->
+<!--                <a class="nav-link" href="http://blog.csdn.net/moshowgame">大狼狗CSDN</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--</div>-->
+
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+<!--        <h1>Spring Boot Code Generator!</h1>-->
+<!--        基于<code>SpringBoot2</code>+<code>Freemarker</code>的代码生成器，用<code>DDL SQL</code>语句生成<code>JPA</code>/<code>JdbcTemplate</code>/<code>Mybatis</code>/<code>BeetlSQL</code>相关代码，支持<code>mysql</code>/<code>oracle</code>/<code>pgsql</code>三大数据库。以<code>释放双手</code>为目的，各大模板也在陆续补充和优化。欢迎大家多多提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>给我分析，谢谢！-->
+<!--        </p>-->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">标题名称</span>
+            </div>
+            <input type="text" class="form-control" id="articleTitle" name="articleTitle" placeholder="标题">
+            <div class="input-group-prepend">
+                <span class="input-group-text">文章类型</span>
+            </div>
+            <input type="text" class="form-control" id="articleType" name="articleType" placeholder="文章类型：1嘉宾推荐 2恋爱教程 3mbti性格 4vip服务 5成功案例 6likeu科学依据">
+        </div>
+        <!--<textarea id="ddlSqlArea" placeholder="请输入文章内容..." class="form-control" style="height: 250px;">
+
+        </textarea>--><br>
+        <div id="editor">
+            <p>欢迎使用富文本编辑器</p>
+        </div>
+        <br/>
+        <br/>
+        <p><button class="btn btn-primary btn-lg" id="btnGenCode" role="button">保存</button></p>
+        <li><a href="article.html">返回</a>
+    </div>
+</div>
+<!--<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>-->
+<!--<script src="../../js/lib/require.js" data-main="../../js/articles/editor"></script>-->
+</body>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    var user=window.parent.user;//记录登录用户
+    document.getElementById('btnGenCode').addEventListener('click', function () {
+        // 读取 html
+        var content = editor.txt.html();
+        // alert(content)
+        var params = {};
+        params ={
+            user:user,
+            content:content,
+            articleTitle:document.getElementById('articleTitle').value,
+            articleType:document.getElementById('articleType').value,
+
+        };
+        $.post('http://localhost:8080' + '/blog/editor',params,function (data) {
+            if (data === 1){
+               alert("成功");
+            }else {
+                alert("失败")
+            }
+        });
+        window.location.href="article.html";
+
+
+    }, false)
+    // 或者 var editor = new E( document.getElementById('editor') )
+
+    // 配置服务器端地址
+    editor.customConfig.uploadImgServer = 'http://localhost:8888/xxxx/upload/editor'
+    //配置指定文件名
+    editor.customConfig.uploadFileName = 'file'
+    //如果图片不大，可以用base64存储
+    //editor.customConfig.uploadImgShowBase64 = true
+    editor.create()
+</script>
+</html>

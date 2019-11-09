@@ -32,4 +32,9 @@
         order by articleUpdateTime desc
     </select>
 
+    <insert id="editArticle" parameterType="Map">
+        insert into article (article_user_id,article_title,article_content,article_summary,article_create_time)
+        VALUES (#{user},#{articleTitle},#{content},#{article_summary},#{article_create_time})
+    </insert>
+
 </mapper>

@@ -84,8 +84,8 @@ require(['config'], function (config) {
                     success: function (msg) {
                         if(msg == "1"){
                             self.showError("成功");
-                            // window.location.href = "./pages/index.html";
-                            window.location.href = "./pages/articles/article.html";
+                            window.location.href = "./pages/index.html";
+                            // window.location.href = "./pages/articles/article.html";
                         }else{
                             self.showError("登录异常，请检查数据库");
                         }

@@ -10,7 +10,7 @@ require(['../config'], function (config) {
                     var articleSummary = data[i].articleSummary;
                     var articleId = data[i].articleId;
                     var articleTitle = data[i].articleTitle;
-                    var articleUpdateTime = data[i].articleUpdateTime;
+                    var articleCreateTime = data[i].articleCreateTime;
                     var author = data[i].userName;
 
                     tdHtml +=
@@ -21,7 +21,7 @@ require(['../config'], function (config) {
                         '<div class="post">'+
                         '<div class="post__media"><a href="blog-detail.html"><img src="" alt=""/></a></div>'+
                         '<div class="post__body">'+
-                        '<div class="post__meta"><span class="date">'+articleUpdateTime+'</span><span class="author"><a href="#">by '+author+'</a></span></div>'+
+                        '<div class="post__meta"><span class="date">'+articleCreateTime+'</span><span class="author"><a href="#">by '+author+'</a></span></div>'+
                         '<h2 class="post__title"><a href="article-detail.html?data='+articleId+'">'+articleTitle+'</a></h2>'+
                         '<p class="post__text" id="sumarry">'+articleSummary+'</p>'+
                         '<a class="md-btn md-btn--outline-primary" href="article-detail.html?data='+articleId+'">read more</a>'+
@@ -41,9 +41,26 @@ require(['../config'], function (config) {
 
     })
 
-    $('#btnMemo').on('click', function (e) {
-        window.location.href = "../index.html";
-    });
+    // $('#btnMemo').on('click', function (e) {
+    //     window.location.href = "../index.html";
+    // });
+
+    /**
+     * Fullscreen menu
+     */
+    // $('.fullscreenmenu__module').each(function () {
+    //     var self = $(this),
+    //         triggerID = self.attr('trigger');
+    //
+    //     self.on("click", function () {
+    //         $(triggerID).toggleClass('open');
+    //         $(this).toggleClass('open');
+    //     });
+    //     $(triggerID).on("click", function () {
+    //         $(triggerID).toggleClass('open');
+    //         self.toggleClass('open');
+    //     });
+    // });
 
     // var articleTitle = document.getElementById();
     // function js_method(articleTitle){
