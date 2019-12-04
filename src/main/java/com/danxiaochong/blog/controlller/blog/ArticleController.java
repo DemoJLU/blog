@@ -72,8 +72,8 @@ public class ArticleController {
         User user = (User) httpSession.getAttribute("AUTH_USER");
         String content = (String) params.get("content");
         String article_summary = null;
-        if (content.length()>500){
-            article_summary = content.substring(0,500);
+        if (content.length()>100){
+            article_summary = content.substring(0,100);
         }else {
             article_summary = content.substring(0,content.length()-1);
         }
